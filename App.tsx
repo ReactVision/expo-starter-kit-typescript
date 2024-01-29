@@ -1,20 +1,56 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from "react";
+import { StyleSheet } from "react-native";
+import {
+  ViroARScene,
+  ViroText,
+  ViroTrackingStateConstants,
+  ViroARSceneNavigator,
+  ViroTrackingReason,
+} from "@viro-community/react-viro";
 
-export default function App() {
+const HelloWorldSceneAR = () => {
+  const [text, setText] = useState("Initializing AR...");
+
+  function onInitialized(state: any, reason: ViroTrackingReason) {
+    console.log("guncelleme", state, reason);
+    if (state === ViroTrackingStateConstants.TRACKING_NORMAL) {
+      setText("Hello World!");
+    } else if (state === ViroTrackingStateConstants.TRACKING_UNAVAILABLE) {
+      // Handle loss of tracking
+    }
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ViroARScene onTrackingUpdated={onInitialized}>
+      <ViroText
+        text={text}
+        scale={[0.5, 0.5, 0.5]}
+        position={[0, 0, -1]}
+        style={styles.helloWorldTextStyle}
+      />
+    </ViroARScene>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+export default () => {
+  return (
+    <ViroARSceneNavigator
+      autofocus={true}
+      initialScene={{
+        scene: HelloWorldSceneAR,
+      }}
+      style={styles.f1}
+    />
+  );
+};
+
+var styles = StyleSheet.create({
+  f1: { flex: 1 },
+  helloWorldTextStyle: {
+    fontFamily: "Arial",
+    fontSize: 30,
+    color: "#ffffff",
+    textAlignVertical: "center",
+    textAlign: "center",
   },
 });
