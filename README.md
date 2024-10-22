@@ -9,7 +9,7 @@ npm install
 ## Running
 
 ```shell
-npm run start`
+npm run start
 ```
 
 ## Expo Docs
