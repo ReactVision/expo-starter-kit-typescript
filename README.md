@@ -1,4 +1,11 @@
-# Expo Starter Kit (TypeScript)
+# Expo Starter Kit with React Viro (TypeScript)
+
+React Viro AR/VR starter kit for Expo with TypeScript.
+
+## Prerequisites
+
+- React Viro requires native code and **cannot run in Expo Go**
+- You must use development builds or prebuild to run this project
 
 ## Installation
 
@@ -6,10 +13,33 @@
 npm install
 ```
 
-## Running
+## Setup
+
+Generate native directories (required for React Viro):
 
 ```shell
-npm run start`
+npx expo prebuild --clean
+```
+
+Check for any project issues:
+
+```shell
+npx expo-doctor
+```
+
+## Running
+
+**Development builds** (recommended):
+
+```shell
+npx expo run:ios
+npx expo run:android
+```
+
+**Development server** (after building):
+
+```shell
+npx expo start --dev-client
 ```
 
 ## Expo Docs
