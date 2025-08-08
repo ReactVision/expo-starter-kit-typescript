@@ -38,7 +38,11 @@
     },
     "plugins": [
       [
-        "@reactvision/react-viro"
+        "@reactvision/react-viro",
+        {
+            "cameraPermission": "This app needs access to camera to take photos of real world for AR",
+            "microphonePermission": "This app needs access to microphone to record audio for AR"
+        }
       ]
     ]
   }

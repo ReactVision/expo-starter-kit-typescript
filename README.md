@@ -15,7 +15,7 @@ npm install
 
 ## Setup
 
-Generate native directories (required for React Viro):
+Generate native directories (required for ViroReact):
 
 ```shell
 npx expo prebuild --clean
@@ -41,6 +41,26 @@ npx expo run:android
 ```shell
 npx expo start --dev-client
 ```
+
+## Troubleshooting
+
+### iOS Build Error: "no such module 'ExpoModulesCore'"
+
+If building through `npx expo run:ios` presents the following error "no such module 'ExpoModulesCore'", follow these steps:
+
+1. Start your development server:
+   ```shell
+   npx expo start --dev-client
+   ```
+
+2. Open the Xcode workspace for the project within the ios folder:
+   ```shell
+   open ios/expostarterkittypescript.xcworkspace
+   ```
+
+3. Build and run the application directly within Xcode
+
+This ensures the Metro bundler is running and properly connected to your iOS build.
 
 ## Expo Docs
 
