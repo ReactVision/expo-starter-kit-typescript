@@ -16,6 +16,10 @@ web-build/
 *.key
 *.mobileprovision
 
+# Generated native directories (CNG workflow)
+android/
+ios/
+
 # Metro
 .metro-health-check*
 

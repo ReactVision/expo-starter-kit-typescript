@@ -6,6 +6,8 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "jsEngine": "hermes",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -15,17 +17,33 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Allow $(PRODUCT_NAME) to access your photos",
+        "NSPhotoLibraryAddUsageDescription": "Allow $(PRODUCT_NAME) to save photos",
+        "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to use your camera",
+        "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to use your microphone"
+      },
+      "bundleIdentifier": "com.anonymous.expo-starter-kit-typescript"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.anonymous.expostarterkittypescript"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["@viro-community/react-viro"]
+    "plugins": [
+      [
+        "@reactvision/react-viro",
+        {
+            "cameraPermission": "This app needs access to camera to take photos of real world for AR",
+            "microphonePermission": "This app needs access to microphone to record audio for AR"
+        }
+      ]
+    ]
   }
 }

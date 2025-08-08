@@ -1,4 +1,11 @@
-# Expo Starter Kit (TypeScript)
+# Expo Starter Kit with React Viro (TypeScript)
+
+React Viro AR/VR starter kit for Expo with TypeScript.
+
+## Prerequisites
+
+- React Viro requires native code and **cannot run in Expo Go**
+- You must use development builds or prebuild to run this project
 
 ## Installation
 
@@ -6,11 +13,54 @@
 npm install
 ```
 
-## Running
+## Setup
+
+Generate native directories (required for ViroReact):
 
 ```shell
-npm run start`
+npx expo prebuild --clean
 ```
+
+Check for any project issues:
+
+```shell
+npx expo-doctor
+```
+
+## Running
+
+**Development builds** (recommended):
+
+```shell
+npx expo run:ios
+npx expo run:android
+```
+
+**Development server** (after building):
+
+```shell
+npx expo start --dev-client
+```
+
+## Troubleshooting
+
+### iOS Build Error: "no such module 'ExpoModulesCore'"
+
+If building through `npx expo run:ios` presents the following error "no such module 'ExpoModulesCore'", follow these steps:
+
+1. Start your development server:
+   ```shell
+   npx expo start --dev-client
+   ```
+
+2. Open the Xcode workspace for the project within the ios folder:
+   ```shell
+   open ios/expostarterkittypescript.xcworkspace
+   ```
+
+3. Build and run the application directly within Xcode
+
+This ensures the Metro bundler is running and properly connected to your iOS build.
 
 ## Expo Docs
 
