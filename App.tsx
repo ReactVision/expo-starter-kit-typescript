@@ -3,7 +3,6 @@ import { StyleSheet } from "react-native";
 import {
   ViroARScene,
   ViroText,
-  ViroImage,
   ViroTrackingStateConstants,
   ViroARSceneNavigator,
   ViroTrackingReason,
