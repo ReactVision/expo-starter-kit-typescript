@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "expo-starter-kit-typescript",
+    "name": "ViroReact Starter",
     "slug": "expo-starter-kit-typescript",
+    "scheme": "expostarterkittypescript",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -35,11 +36,19 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
+      "./plugins/enable-new-architecture",
       [
         "@reactvision/react-viro",
         {
-            "cameraPermission": "This app needs access to camera to take photos of real world for AR",
-            "microphonePermission": "This app needs access to microphone to record audio for AR"
+          "android": {
+            "xRMode": "AR"
+          },
+          "ios": {
+        	  "cameraUsagePermission": "ViroReact Starter uses your camera for AR experiences.",
+            "microphoneUsagePermission": "ViroReact Starter  uses your microphone for AR experiences.",
+            "photosPermission": "ViroReact Starter  would like to read photos for AR experiences.",
+            "savephotosPermission": "ViroReact Starter  would like to save photos to your library during AR experiences."
+          }
         }
       ]
     ]
