@@ -1,10 +1,10 @@
-# Expo Starter Kit with React Viro (TypeScript)
+# Expo Starter Kit for ViroReact
 
-React Viro AR/VR starter kit for Expo with TypeScript.
+ViroReact AR/VR starter kit for Expo with TypeScript.
 
 ## Prerequisites
 
-- React Viro requires native code and **cannot run in Expo Go**
+- ViroReact requires native code and **cannot run in Expo Go**
 - You must use development builds or prebuild to run this project
 
 ## Installation
@@ -67,6 +67,10 @@ This ensures the Metro bundler is running and properly connected to your iOS bui
 [Expo Docs](https://docs.expo.dev/)
 
 ## Need help?
+
+[ViroReact Docs](https://viro-community.readme.io/docs/overview)
+
+[ViroReact Website](https://reactvision.xyz/viro-react?source=starterkit-readme)
 
 <a href="https://discord.gg/H3ksm5NhzT">
    <img src="https://discordapp.com/api/guilds/774471080713781259/widget.png?style=banner2" alt="Discord Banner 2"/>
