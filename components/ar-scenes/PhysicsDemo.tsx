@@ -14,6 +14,9 @@ ViroMaterials.createMaterials({
   cubeMaterial: {
     diffuseColor: "#FF6B6B",
   },
+  surfaceMaterial: {
+    diffuseColor: "#000000",
+  },
 });
 
 interface PhysicsDemoProps {
@@ -59,7 +62,7 @@ const PhysicsDemo = (props: PhysicsDemoProps = {}) => {
 
       {planeSelected && (
         <ViroText
-          text="Drag robot to hit cube"
+          text="Drag robot, release to drop"
           scale={[0.3, 0.3, 0.3]}
           position={[0, 0.3, -0.7]}
           style={styles.textStyle}
@@ -67,16 +70,18 @@ const PhysicsDemo = (props: PhysicsDemoProps = {}) => {
       )}
 
       <ViroARPlaneSelector
-        minHeight={0.2}
-        minWidth={0.2}
+        minHeight={0.3}
+        minWidth={0.3}
         onPlaneSelected={onPlaneSelected}
       >
         {/* Static plane surface - prevents objects from falling through */}
         <ViroBox
-          position={[0, -0.02, 0]}
-          scale={[1.5, 0.01, 1.5]}
-          materials={["cubeMaterial"]}
-          opacity={0.2}
+          position={[0, 0.0, 0]}
+          width={1.0}
+          height={0.02}
+          length={1.0}
+          materials={["surfaceMaterial"]}
+          opacity={0.5}
           physicsBody={{
             type: 'Static',
             shape: { type: "Box", params: [1.5, 0.01, 1.5] },
@@ -86,41 +91,65 @@ const PhysicsDemo = (props: PhysicsDemoProps = {}) => {
         {/* Robot with draggable physics - Dynamic allows collisions */}
         <Viro3DObject
           source={require("../../assets/models/robot.glb")}
-          position={[-0.4, 0.1, 0]}
+          position={[-0.4, 0.0, 0]}
           scale={[0.35, 0.35, 0.35]}
           rotation={[0, 90, 0]}
           type="GLB"
-          dragType="FixedToPlane"
-          dragPlane={{
-            planePoint: [0, 0, 0],
-            planeNormal: [0, 1, 0],
-            maxDistance: 5
-          }}
+          dragType="FixedToWorld"
           onDrag={onDrag}
           physicsBody={{
             type: 'Dynamic',
-            mass: 3,
-            shape: { type: "Box", params: [0.2, 0.35, 0.2] },
-            restitution: 0.2,
-            friction: 0.8,
+            mass: 2,
+            shape: { type: "Box", params: [0.15, 0.3, 0.15] },
+            restitution: 0.3,
+            friction: 0.6,
             useGravity: true,
           }}
         />
 
-        {/* Cube with dynamic physics - can be pushed and fall off plane */}
+        {/* Group of cubes with dynamic physics - can be pushed and fall off plane */}
         <ViroBox
-          position={[0.4, 0.1, 0]}
-          scale={[0.15, 0.15, 0.15]}
+          position={[-0.3, 0.12, -0.3]}
+          scale={[0.12, 0.12, 0.12]}
           materials={["cubeMaterial"]}
           physicsBody={{
             type: 'Dynamic',
-            mass: 0.3,
-            shape: { type: "Box", params: [0.15, 0.15, 0.15] },
-            restitution: 0.6,
-            friction: 0.4,
+            mass: 0.5,
+            shape: { type: "Box", params: [0.12, 0.12, 0.12] },
+            restitution: 0.4,
+            friction: 0.5,
             useGravity: true,
           }}
         />
+
+        <ViroBox
+          position={[-0.5, 0.12, -0.3]}
+          scale={[0.12, 0.12, 0.12]}
+          materials={["cubeMaterial"]}
+          physicsBody={{
+            type: 'Dynamic',
+            mass: 0.5,
+            shape: { type: "Box", params: [0.12, 0.12, 0.12] },
+            restitution: 0.4,
+            friction: 0.5,
+            useGravity: true,
+          }}
+        />
+
+        <ViroBox
+          position={[-0.4, 0.18, -0.3]}
+          scale={[0.12, 0.12, 0.12]}
+          materials={["cubeMaterial"]}
+          physicsBody={{
+            type: 'Dynamic',
+            mass: 0.5,
+            shape: { type: "Box", params: [0.12, 0.12, 0.12] },
+            restitution: 0.4,
+            friction: 0.5,
+            useGravity: true,
+          }}
+        />
+
       </ViroARPlaneSelector>
     </ViroARScene>
   );
