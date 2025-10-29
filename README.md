@@ -21,6 +21,7 @@ The app is built around a multi-scene navigation pattern:
   - `AutoPlaneScene.tsx`: Automatic plane detection demo
   - `ManualPlaneScene.tsx`: Manual plane selection demo
   - `NoPlaneScene.tsx`: AR without plane anchoring demo
+  - `PhysicsDemo.tsx`: Physics-based bowling game demo
 
 ### Scene Navigation
 
@@ -121,6 +122,65 @@ The app uses `ViroARSceneNavigator` to manage scene transitions. Each scene rece
 
 ---
 
+#### 5. Physics Demo (Bowling Game)
+**Purpose**: Demonstrates physics simulation with a playable bowling mini-game
+
+**Features**:
+- Interactive AR bowling game with realistic physics simulation
+- User selects a plane to place the bowling alley
+- Draggable bowling ball with physics-based collision detection
+- Three bowling pins arranged in a triangle formation
+- Reset button to restart the game
+- Invisible boundary walls to contain objects within the alley
+- Automatic object reset when objects fall too far (prevents memory issues)
+
+**Key Viro Components**:
+- `ViroARScene`: Container with physics world configuration
+  - `physicsWorld={{ gravity: -9.8 }}`: Enables physics simulation with Earth-like gravity
+- `ViroARPlaneSelector`: Allows user to select a plane for the bowling alley
+  - `minHeight={0.3}` and `minWidth={0.3}`: Minimum plane dimensions
+  - `onPlaneSelected`: Callback when user selects a plane
+  - `key={resetKey}`: Forces scene remount for clean physics reset
+- `ViroBox`: Used for multiple purposes:
+  - Bowling alley surface (black, 0.8 opacity)
+  - Bowling pins (white, dynamic physics bodies)
+  - Invisible boundary walls (left, right, front, back)
+- `ViroSphere`: Bowling ball with draggable physics
+  - `radius={0.06}`: Size of the bowling ball
+  - `dragType="FixedDistance"`: Stable dragging at fixed distance from camera
+  - `onTransformUpdate`: Monitors ball position for fall detection
+- Physics Bodies:
+  - **Static**: Used for alley surface and walls (don't move)
+  - **Dynamic**: Used for ball and pins (affected by gravity and collisions)
+  - `mass`: Controls object weight and collision response
+  - `restitution`: Bounciness factor (0.3-0.5)
+  - `friction`: Surface friction (affects rolling/sliding)
+  - `useGravity`: Enables gravity effect on object
+
+**Game Mechanics**:
+- Bowling alley dimensions: 0.3m wide × 1.2m long × 0.05m tall
+- Ball: 0.06m radius, 3.0 mass, low friction for rolling
+- Pins: 0.04m × 0.12m × 0.04m, 0.3 mass each
+- Pin positions:
+  - Front pin: Z = -0.5
+  - Back pins: Z = -0.6 (left and right)
+- Invisible walls prevent objects from escaping the alley
+- Fall detection threshold: Y < -0.5 triggers reset
+
+**Interaction Methods**:
+1. Tap to select a plane where the bowling alley will be placed
+2. Drag the blue bowling ball to aim
+3. Release to throw - physics handles the collision and pin knockdown
+4. Tap "Reset" button to restart the game with fresh pin placement
+5. Tap "Back" to return to the opening scene
+
+**Physics Optimizations**:
+- Objects that fall below Y = -0.5 automatically trigger a scene reset
+- Scene uses a key-based reset system to properly clear physics state
+- Boundary walls prevent infinite falling (which caused memory crashes)
+
+---
+
 ### Common Viro Components Used
 
 - **`ViroARScene`**: Root container for all AR content in a scene
@@ -128,13 +188,14 @@ The app uses `ViroARSceneNavigator` to manage scene transitions. Each scene rece
 - **`ViroAmbientLight`**: Provides even lighting across the scene for 3D models
 - **`Viro3DObject`**: Loads external 3D models (GLB, GLTF, OBJ, etc.)
 - **`ViroBox`**: Built-in 3D box primitive geometry
+- **`ViroSphere`**: Built-in 3D sphere primitive geometry
 - **`ViroARPlane`**: Automatic plane detection and anchoring
 - **`ViroARPlaneSelector`**: User-controlled plane selection
 - **`ViroMaterials`**: Material system for defining object appearance
 
 ### Drag Functionality
 
-This project demonstrates two drag types:
+This project demonstrates three drag types:
 
 1. **`FixedToPlane`** (Auto Plane Scene)
    - Constrains object movement to a specific plane surface
@@ -146,7 +207,13 @@ This project demonstrates two drag types:
    - No plane constraints
    - Ideal for floating objects or free-form placement
 
-Both require an `onDrag` callback to handle position updates during drag events.
+3. **`FixedDistance`** (Physics Demo)
+   - Keeps object at a fixed distance from the camera/user during drag
+   - Most stable for AR interactions with physics
+   - Object maintains consistent scale/distance while being repositioned
+   - Works well with physics bodies as it doesn't override collision detection when released
+
+All drag types can include an `onDrag` callback to handle position updates during drag events.
 
 ### Metro Configuration
 
@@ -156,6 +223,45 @@ The project includes a `metro.config.js` file that configures Metro bundler to h
 - `.hdr`, `.ktx`: Texture formats
 
 This configuration is essential for using `require()` to load 3D assets.
+
+### Physics System
+
+The Physics Demo scene demonstrates ViroReact's built-in physics engine capabilities:
+
+**Physics World Setup**:
+- Configured on `ViroARScene` with `physicsWorld={{ gravity: -9.8 }}`
+- Gravity value in m/s² (negative Y direction)
+- Affects all objects with `useGravity: true` in their physics body
+
+**Physics Body Types**:
+1. **Static** - Fixed objects that don't move (alley surface, walls)
+   - Not affected by forces or collisions
+   - Other objects can collide with them
+   - Zero computational overhead
+
+2. **Dynamic** - Movable objects affected by physics (ball, pins)
+   - Responds to gravity, forces, and collisions
+   - Has mass, friction, and restitution properties
+   - Requires collision shape definition
+
+**Physics Properties**:
+- `mass`: Weight of the object (affects collision response)
+- `shape`: Collision geometry (`Box`, `Sphere`, etc. with dimensions)
+- `restitution`: Bounciness (0 = no bounce, 1 = perfect bounce)
+- `friction`: Surface friction (0 = ice, 1 = rubber)
+- `useGravity`: Enable/disable gravity for this object
+
+**Collision Detection**:
+- Automatic between all physics bodies
+- No manual collision callbacks needed for basic interactions
+- Objects with physics bodies will naturally interact based on their properties
+
+**Best Practices**:
+- Use simple collision shapes (Box, Sphere) for better performance
+- Keep mass ratios reasonable (ball 10x heavier than pins works well)
+- Add boundary walls to prevent infinite falling
+- Monitor object positions with `onTransformUpdate` for cleanup
+- Use key-based resets to properly clear physics state
 
 ## Installation
 
