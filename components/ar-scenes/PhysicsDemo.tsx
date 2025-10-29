@@ -93,7 +93,7 @@ const PhysicsDemo = (props: PhysicsDemoProps = {}) => {
           text="Tap to select a plane"
           scale={[0.4, 0.4, 0.4]}
           position={[0, 0, -2]}
-          style={styles.smallTextStyle}
+          style={styles.textStyle}
         />
       )}
 
@@ -102,7 +102,7 @@ const PhysicsDemo = (props: PhysicsDemoProps = {}) => {
           text="Drag the ball and throw it!"
           scale={[0.3, 0.3, 0.3]}
           position={[0, 0.3, -0.7]}
-          style={styles.textStyle}
+          style={styles.smallTextStyle}
         />
       )}
 
