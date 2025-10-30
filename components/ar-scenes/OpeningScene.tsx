@@ -4,6 +4,7 @@ import { ViroARScene, ViroText } from "@reactvision/react-viro";
 import AutoPlaneScene from "./AutoPlaneScene";
 import ManualPlaneScene from "./ManualPlaneScene";
 import NoPlaneScene from "./NoPlaneScene";
+import PhysicsDemo from "./PhysicsDemo";
 
 interface OpeningSceneProps {
   sceneNavigator?: any;
@@ -19,16 +20,23 @@ const OpeningScene = (props: OpeningSceneProps = {}) => {
       <ViroText
         text="Auto Plane"
         scale={[0.5, 0.5, 0.5]}
-        position={[0, 0.5, -2]}
+        position={[0, 1, -2]}
         style={styles.textStyle}
         onClick={() => navigateToScene(AutoPlaneScene)}
       />
       <ViroText
         text="Manual Plane"
         scale={[0.5, 0.5, 0.5]}
-        position={[0, 0, -2]}
+        position={[0, 0.5, -2]}
         style={styles.textStyle}
         onClick={() => navigateToScene(ManualPlaneScene)}
+      />
+      <ViroText
+        text="Physics Demo"
+        scale={[0.5, 0.5, 0.5]}
+        position={[0, 0, -2]}
+        style={styles.textStyle}
+        onClick={() => navigateToScene(PhysicsDemo)}
       />
       <ViroText
         text="No Plane"

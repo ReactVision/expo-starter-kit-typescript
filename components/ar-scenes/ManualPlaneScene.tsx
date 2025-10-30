@@ -6,6 +6,7 @@ import {
   ViroARPlaneSelector,
   Viro3DObject,
   ViroAmbientLight,
+  ViroBox,
 } from "@reactvision/react-viro";
 
 interface ManualPlaneSceneProps {
@@ -56,6 +57,7 @@ const ManualPlaneScene = (props: ManualPlaneSceneProps = {}) => {
           scale={[0.3, 0.3, 0.3]}
           type="GLB"
         />
+
       </ViroARPlaneSelector>
     </ViroARScene>
   );
