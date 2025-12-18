@@ -48,7 +48,10 @@
             "microphoneUsagePermission": "ViroReact Starter  uses your microphone for AR experiences.",
             "photosPermission": "ViroReact Starter  would like to read photos for AR experiences.",
             "savephotosPermission": "ViroReact Starter  would like to save photos to your library during AR experiences."
-          }
+          },
+          "googleCloudApiKey":"AIzaSyA9nIsL4vMd844wEApF8Q",
+          "cloudAnchorProvider": "arcore",
+          "geospatialAnchorProvider" : "arcore"
         }
       ]
     ]
