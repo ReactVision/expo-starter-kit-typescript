@@ -2,21 +2,8 @@ const { getDefaultConfig } = require('expo/metro-config');
 
 const config = getDefaultConfig(__dirname);
 
-// Add support for 3D model file extensions
-config.resolver.assetExts.push(
-  // 3D model formats
-  'glb',
-  'gltf',
-  'obj',
-  'mtl',
-  'fbx',
-  'dae',
-  'vrx',
-  'arobject',
-  // Additional asset formats that ViroReact might use
-  'hdr',
-  'ktx'
-);
+// Add glb/gltf 3D model support
+config.resolver.assetExts.push('glb', 'gltf');
 
 module.exports = config;
 

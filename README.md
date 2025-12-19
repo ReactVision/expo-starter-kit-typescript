@@ -13,9 +13,9 @@ This starter kit demonstrates multiple AR scenarios to help you understand how V
 
 ### Project Structure
 
-The app is built around a multi-scene navigation pattern:
+The app is built around a multi-scene navigation pattern, with Expo Router on the base:
 
-- **`App.tsx`**: Entry point that initializes the `ViroARSceneNavigator` with the opening scene
+- **`index.tsx`**: Entry point that initializes the `ViroARSceneNavigator` with the opening scene
 - **`components/ar-scenes/`**: Contains all AR scene components
   - `OpeningScene.tsx`: Main menu with navigation options
   - `AutoPlaneScene.tsx`: Automatic plane detection demo
