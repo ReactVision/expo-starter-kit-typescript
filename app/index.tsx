@@ -10,11 +10,27 @@ import { useSettings } from "@/contexts/SettingsContext";
 export default function ARHome() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const { occlusionEnabled } = useSettings();
+  const { occlusionEnabled, setOcclusionSupported, setOcclusionEnabled } =
+    useSettings();
+
+  const handleNavigatorRef = (
+    navigator: InstanceType<typeof ViroARSceneNavigator> | null,
+  ) => {
+    if (navigator?.arSceneNavigator?.isDepthOcclusionSupported) {
+      navigator.arSceneNavigator.isDepthOcclusionSupported().then((result) => {
+        console.log("isDepthOcclusionSupported", result);
+        setOcclusionSupported(result.supported);
+        if (!result.supported) {
+          setOcclusionEnabled(false);
+        }
+      });
+    }
+  };
 
   return (
     <View style={styles.container}>
       <ViroARSceneNavigator
+        ref={handleNavigatorRef}
         initialScene={{ scene: OpeningScene }}
         style={styles.arNavigator}
         occlusionMode={occlusionEnabled ? "depthBased" : "disabled"}

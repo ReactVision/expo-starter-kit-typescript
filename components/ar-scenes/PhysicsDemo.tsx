@@ -8,7 +8,6 @@ import {
   ViroBox,
   ViroMaterials,
   ViroSphere,
-  ViroNode,
 } from "@reactvision/react-viro";
 
 ViroMaterials.createMaterials({
@@ -34,7 +33,7 @@ const PhysicsDemo = (props: PhysicsDemoProps = {}) => {
   const { sceneNavigator } = props;
   const [planeSelected, setPlaneSelected] = useState(false);
   const [resetKey, setResetKey] = useState(0); // Key to force re-render and reset physics
-  
+
   const ballRef = useRef<any>(null);
 
   const FALL_THRESHOLD = -0.5; // Reset objects that fall below this Y position
@@ -51,7 +50,7 @@ const PhysicsDemo = (props: PhysicsDemoProps = {}) => {
   const handleReset = () => {
     console.log("Resetting game...");
     // Increment key to force all objects to remount with initial positions
-    setResetKey(prev => prev + 1);
+    setResetKey((prev) => prev + 1);
   };
 
   const onDrag = (dragToPos: any, source: any) => {
@@ -67,9 +66,9 @@ const PhysicsDemo = (props: PhysicsDemoProps = {}) => {
   };
 
   return (
-    <ViroARScene physicsWorld={{ gravity: -9.8 }}>
+    <ViroARScene physicsWorld={{ gravity: [0, -9.8, 0] }}>
       <ViroAmbientLight color="#ffffff" intensity={200} />
-      
+
       <ViroText
         text="Back"
         scale={[0.3, 0.3, 0.3]}
@@ -112,7 +111,6 @@ const PhysicsDemo = (props: PhysicsDemoProps = {}) => {
         onPlaneSelected={onPlaneSelected}
         key={`plane-${resetKey}`}
       >
-
         {/* Bowling Alley - Long black box */}
         <ViroBox
           position={[0, 0.03, -0.3]}
@@ -122,7 +120,7 @@ const PhysicsDemo = (props: PhysicsDemoProps = {}) => {
           materials={["alleyMaterial"]}
           opacity={0.8}
           physicsBody={{
-            type: 'Static',
+            type: "Static",
             shape: { type: "Box", params: [0.3, 0.05, 1.2] },
           }}
         />
@@ -137,11 +135,11 @@ const PhysicsDemo = (props: PhysicsDemoProps = {}) => {
           materials={["wallMaterial"]}
           opacity={0}
           physicsBody={{
-            type: 'Static',
+            type: "Static",
             shape: { type: "Box", params: [0.02, 0.2, 1.2] },
           }}
         />
-        
+
         {/* Right Wall */}
         <ViroBox
           position={[0.16, 0.1, -0.3]}
@@ -151,7 +149,7 @@ const PhysicsDemo = (props: PhysicsDemoProps = {}) => {
           materials={["wallMaterial"]}
           opacity={0}
           physicsBody={{
-            type: 'Static',
+            type: "Static",
             shape: { type: "Box", params: [0.02, 0.2, 1.2] },
           }}
         />
@@ -165,7 +163,7 @@ const PhysicsDemo = (props: PhysicsDemoProps = {}) => {
           materials={["wallMaterial"]}
           opacity={0}
           physicsBody={{
-            type: 'Static',
+            type: "Static",
             shape: { type: "Box", params: [0.3, 0.2, 0.02] },
           }}
         />
@@ -179,7 +177,7 @@ const PhysicsDemo = (props: PhysicsDemoProps = {}) => {
           materials={["wallMaterial"]}
           opacity={0}
           physicsBody={{
-            type: 'Static',
+            type: "Static",
             shape: { type: "Box", params: [0.3, 0.2, 0.02] },
           }}
         />
@@ -193,7 +191,7 @@ const PhysicsDemo = (props: PhysicsDemoProps = {}) => {
           length={0.04}
           materials={["pinMaterial"]}
           physicsBody={{
-            type: 'Dynamic',
+            type: "Dynamic",
             mass: 0.3,
             shape: { type: "Box", params: [0.04, 0.12, 0.04] },
             restitution: 0.3,
@@ -210,7 +208,7 @@ const PhysicsDemo = (props: PhysicsDemoProps = {}) => {
           length={0.04}
           materials={["pinMaterial"]}
           physicsBody={{
-            type: 'Dynamic',
+            type: "Dynamic",
             mass: 0.3,
             shape: { type: "Box", params: [0.04, 0.12, 0.04] },
             restitution: 0.3,
@@ -227,7 +225,7 @@ const PhysicsDemo = (props: PhysicsDemoProps = {}) => {
           length={0.04}
           materials={["pinMaterial"]}
           physicsBody={{
-            type: 'Dynamic',
+            type: "Dynamic",
             mass: 0.3,
             shape: { type: "Box", params: [0.04, 0.12, 0.04] },
             restitution: 0.3,
@@ -238,28 +236,27 @@ const PhysicsDemo = (props: PhysicsDemoProps = {}) => {
 
         {/* Bowling Ball - Draggable Sphere */}
 
-          <ViroSphere
-            ref={ballRef}
-            position={INITIAL_BALL_POS}
-            onTransformUpdate={(updateObject: any) => {
-              if (updateObject?.position) {
-                onBallUpdate(updateObject.position);
-              }
-            }}
-            radius={0.06}
-            materials={["ballMaterial"]}
-            dragType="FixedDistance"
-            onDrag={onDrag}
-            physicsBody={{
-              type: 'Dynamic',
-              mass: 3.0,
-              shape: { type: "Sphere", params: [0.06] },
-              restitution: 0.5,
-              friction: 0.0,
-              useGravity: true,
-            }}
-          />
-
+        <ViroSphere
+          ref={ballRef}
+          position={INITIAL_BALL_POS}
+          onTransformUpdate={(updateObject: any) => {
+            if (updateObject?.position) {
+              onBallUpdate(updateObject.position);
+            }
+          }}
+          radius={0.06}
+          materials={["ballMaterial"]}
+          dragType="FixedDistance"
+          onDrag={onDrag}
+          physicsBody={{
+            type: "Dynamic",
+            mass: 3.0,
+            shape: { type: "Sphere", params: [0.06] },
+            restitution: 0.5,
+            friction: 0.0,
+            useGravity: true,
+          }}
+        />
       </ViroARPlaneSelector>
     </ViroARScene>
   );
@@ -283,4 +280,3 @@ const styles = StyleSheet.create({
 });
 
 export default PhysicsDemo;
-

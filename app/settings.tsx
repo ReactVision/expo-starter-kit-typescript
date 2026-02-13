@@ -9,7 +9,10 @@ import { StatusBar } from "expo-status-bar";
 export default function Settings() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const { occlusionEnabled, setOcclusionEnabled } = useSettings();
+  const { occlusionEnabled, setOcclusionEnabled, occlusionSupported } =
+    useSettings();
+
+  const isOcclusionToggleDisabled = occlusionSupported === false;
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
@@ -31,12 +34,15 @@ export default function Settings() {
           <View style={styles.settingInfo}>
             <Text style={styles.settingLabel}>Occlusion</Text>
             <Text style={styles.settingDescription}>
-              Enable depth-based occlusion for AR objects
+              {isOcclusionToggleDisabled
+                ? "Depth-based occlusion is not supported on this device"
+                : "Enable depth-based occlusion for AR objects"}
             </Text>
           </View>
           <Switch
             value={occlusionEnabled}
             onValueChange={setOcclusionEnabled}
+            disabled={isOcclusionToggleDisabled}
             trackColor={{ false: "#767577", true: "#0a7ea4" }}
             thumbColor={occlusionEnabled ? "#fff" : "#f4f3f4"}
           />
