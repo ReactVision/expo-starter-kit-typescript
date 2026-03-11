@@ -64,8 +64,7 @@
             "savephotosPermission": "Starter Kit would like to save photos to your library during AR experiences."
           },
           "googleCloudApiKey": "Your Google Cloud API Key",
-          "cloudAnchorProvider": "arcore",
-          "geospatialAnchorProvider": "arcore"
+          "provider": "reactvision"
         }
       ]
     ],

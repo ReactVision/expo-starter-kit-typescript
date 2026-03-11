@@ -35,6 +35,7 @@ const PhysicsDemo = (props: PhysicsDemoProps = {}) => {
   const [resetKey, setResetKey] = useState(0); // Key to force re-render and reset physics
 
   const ballRef = useRef<any>(null);
+  const selectorRef = useRef<ViroARPlaneSelector>(null);
 
   const FALL_THRESHOLD = -0.5; // Reset objects that fall below this Y position
   const INITIAL_BALL_POS: [number, number, number] = [0, 0.1, 0.25];
@@ -66,7 +67,12 @@ const PhysicsDemo = (props: PhysicsDemoProps = {}) => {
   };
 
   return (
-    <ViroARScene physicsWorld={{ gravity: [0, -9.8, 0] }}>
+    <ViroARScene
+      physicsWorld={{ gravity: [0, -9.8, 0] }}
+      onAnchorFound={(a) => selectorRef.current?.handleAnchorFound(a)}
+      onAnchorUpdated={(a) => selectorRef.current?.handleAnchorUpdated(a)}
+      onAnchorRemoved={(a) => a && selectorRef.current?.handleAnchorRemoved(a)}
+    >
       <ViroAmbientLight color="#ffffff" intensity={200} />
 
       <ViroText
@@ -106,6 +112,7 @@ const PhysicsDemo = (props: PhysicsDemoProps = {}) => {
       )}
 
       <ViroARPlaneSelector
+        ref={selectorRef}
         minHeight={0.3}
         minWidth={0.3}
         onPlaneSelected={onPlaneSelected}
