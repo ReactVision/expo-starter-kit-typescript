@@ -277,6 +277,17 @@ Generate native directories (required for ViroReact):
 npx expo prebuild --clean
 ```
 
+### Download Depth Model (Optional but Recommended)
+
+In order to use depth-based features such as occlusion on iOS devices that do not support LiDAR, you will need to download the CoreML depth model. 
+
+1. Download the depth model from the [ViroReact documentation](https://viro-community.readme.io/docs/installation-instructions#download-depth-model)
+2. Extract the `.zip` file
+3. Add the model to your iOS project after running `prebuild` (since `prebuild` can clear your native directories)
+4. Ensure the model is bundled into your iOS project before building your app
+
+**Note**: This step is optional but recommended if you plan to use depth-based features like occlusion on non-LiDAR iOS devices.
+
 Check for any project issues:
 
 ```shell

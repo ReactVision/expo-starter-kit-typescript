@@ -10,7 +10,17 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.expo-starter-kit-typescript"
+      "bundleIdentifier": "com.anonymous.expo-starter-kit-typescript",
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Starter Kit would like to read photos for AR experiences.",
+        "NSPhotoLibraryAddUsageDescription": "Allow $(PRODUCT_NAME) to save photos",
+        "NSCameraUsageDescription": "Starter Kit uses your camera for AR experiences.",
+        "NSMicrophoneUsageDescription": "Starter Kit uses your microphone for AR experiences.",
+        "GARAPIKey": "Your Google Cloud API Key",
+        "NSLocationWhenInUseUsageDescription": "Allow $(PRODUCT_NAME) to use your location for AR experiences",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Allow $(PRODUCT_NAME) to use your location for AR experiences"
+      },
+      "appleTeamId": "LVTPS6J5KQ"
     },
     "android": {
       "package": "com.anonymous.expostarterkittypescript",
@@ -48,14 +58,13 @@
             "xRMode": "AR"
           },
           "ios": {
-        	  "cameraUsagePermission": "Starter Kit uses your camera for AR experiences.",
+            "cameraUsagePermission": "Starter Kit uses your camera for AR experiences.",
             "microphoneUsagePermission": "Starter Kit uses your microphone for AR experiences.",
             "photosPermission": "Starter Kit would like to read photos for AR experiences.",
             "savephotosPermission": "Starter Kit would like to save photos to your library during AR experiences."
           },
-          "googleCloudApiKey":"Your Google Cloud API Key",
-          "cloudAnchorProvider": "arcore",
-          "geospatialAnchorProvider" : "arcore"
+          "googleCloudApiKey": "Your Google Cloud API Key",
+          "provider": "reactvision"
         }
       ]
     ],

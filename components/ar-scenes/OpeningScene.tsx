@@ -5,6 +5,7 @@ import AutoPlaneScene from "./AutoPlaneScene";
 import ManualPlaneScene from "./ManualPlaneScene";
 import NoPlaneScene from "./NoPlaneScene";
 import PhysicsDemo from "./PhysicsDemo";
+import ShadersScene from "./ShadersScene";
 
 interface OpeningSceneProps {
   sceneNavigator?: any;
@@ -45,6 +46,13 @@ const OpeningScene = (props: OpeningSceneProps = {}) => {
         style={styles.textStyle}
         onClick={() => navigateToScene(NoPlaneScene)}
       />
+      <ViroText
+        text="Shaders"
+        scale={[0.5, 0.5, 0.5]}
+        position={[0, -1, -2]}
+        style={styles.textStyle}
+        onClick={() => navigateToScene(ShadersScene)}
+      />
     </ViroARScene>
   );
 };
@@ -60,4 +68,3 @@ const styles = StyleSheet.create({
 });
 
 export default OpeningScene;
-
