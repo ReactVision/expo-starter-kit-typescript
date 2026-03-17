@@ -65,8 +65,8 @@
           },
           "googleCloudApiKey": "Your Google Cloud API Key",
           "provider": "reactvision",
-          "rvApiKey": "rv_live_32c2ee0e9a04f24e1bb6ee0bf08762e363173c2ae8935629a62c8b91af8a4d32",
-          "rvProjectId": "962c5fb1-2090-4607-b268-1f63b5fba45d"
+          "rvApiKey": "Add your API key here",
+          "rvProjectId": "Add your project ID here"
         }
       ]
     ],
