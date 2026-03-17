@@ -64,7 +64,9 @@
             "savephotosPermission": "Starter Kit would like to save photos to your library during AR experiences."
           },
           "googleCloudApiKey": "Your Google Cloud API Key",
-          "provider": "reactvision"
+          "provider": "reactvision",
+          "rvApiKey": "Add your API key here",
+          "rvProjectId": "Add your project ID here"
         }
       ]
     ],

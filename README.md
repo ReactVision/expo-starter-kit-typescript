@@ -18,10 +18,12 @@ The app is built around a multi-scene navigation pattern, with Expo Router on th
 - **`index.tsx`**: Entry point that initializes the `ViroARSceneNavigator` with the opening scene
 - **`components/ar-scenes/`**: Contains all AR scene components
   - `OpeningScene.tsx`: Main menu with navigation options
+  - `GeospatialAnchorScene.tsx`: Geospatial anchor hosting and resolving demo
   - `AutoPlaneScene.tsx`: Automatic plane detection demo
   - `ManualPlaneScene.tsx`: Manual plane selection demo
   - `NoPlaneScene.tsx`: AR without plane anchoring demo
   - `PhysicsDemo.tsx`: Physics-based bowling game demo
+  - `ShadersScene.tsx`: Custom shader modifiers demo
 
 ### Scene Navigation
 
@@ -35,7 +37,7 @@ The app uses `ViroARSceneNavigator` to manage scene transitions. Each scene rece
 **Purpose**: Navigation hub for exploring different AR plane detection methods
 
 **Features**:
-- Three clickable `ViroText` elements stacked vertically
+- Clickable `ViroText` elements stacked vertically for each demo
 - Each text navigates to a different demonstration scene
 - Uses `onClick` handlers to trigger scene transitions
 
@@ -178,6 +180,57 @@ The app uses `ViroARSceneNavigator` to manage scene transitions. Each scene rece
 - Objects that fall below Y = -0.5 automatically trigger a scene reset
 - Scene uses a key-based reset system to properly clear physics state
 - Boundary walls prevent infinite falling (which caused memory crashes)
+
+---
+
+#### 6. Shaders Scene
+**Purpose**: Demonstrates custom shader modifiers for advanced material effects
+
+**Features**:
+- Multiple spheres showcasing different shader techniques
+- Custom GLSL shader modifiers for surface and geometry
+- Animated effects: red rim lighting, crystal shell, ocean water, glass
+- Real-time uniform updates for time-based animation
+- Back button to return to opening scene
+
+**Key Viro Components**:
+- `ViroSphere`: Base geometry for shader demonstrations
+- `ViroMaterials.createMaterials()`: Defines materials with `shaderModifiers`
+- `ViroMaterials.updateShaderUniform()`: Animates shader uniforms (e.g. `time`)
+- `ViroNode`: Groups spheres for layout
+- `ViroSpotLight`: Dynamic lighting for material effects
+
+**Shader Techniques**:
+- **Surface modifiers**: Override `_surface.diffuse_color` for rim lighting, edge effects
+- **Geometry modifiers**: Modify `_geometry.normal` for faceted/crystal looks
+- **Uniforms**: Pass `time` for animated pulsing and wave effects
+- **Blend modes**: Alpha blending for transparent/glass materials
+
+---
+
+#### 7. Geospatial Anchor Scene
+**Purpose**: Demonstrates hosting and resolving geospatial anchors at real-world GPS coordinates
+
+**Features**:
+- Scene with ViroText buttons: Back, Host, Find Nearby
+- Host an anchor at your current location (uses `pose.altitude` and `"street_level"`)
+- Find Nearby: discover anchors within 500m via `rvFindNearbyGeospatialAnchors`
+- Pose and status shown as ViroText
+- 2 second delay before starting geospatial mode (AR session warm-up)
+- 25m accuracy threshold for hosting
+
+**Key Components**:
+- `GeospatialAnchorScene.tsx`: Scene with host/resolve logic, ViroText buttons, anchor rendering
+
+**Requirements**:
+- Physical device (not simulator)
+- Location permissions granted
+- Internet connection for ReactVision backend
+- ReactVision provider configured in app.json (`rvApiKey`, `rvProjectId`)
+
+**References**:
+- [ViroReact Geospatial API](https://viro-community.readme.io/docs/geospatial)
+- [Geospatial Anchor Guide](https://medium.com/@oliedis/7a543b01360c)
 
 ---
 
