@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { ViroARScene, ViroText } from "@reactvision/react-viro";
 import AutoPlaneScene from "./AutoPlaneScene";
+import GeospatialAnchorScene from "./GeospatialAnchorScene";
 import ManualPlaneScene from "./ManualPlaneScene";
 import NoPlaneScene from "./NoPlaneScene";
 import PhysicsDemo from "./PhysicsDemo";
@@ -52,6 +53,13 @@ const OpeningScene = (props: OpeningSceneProps = {}) => {
         position={[0, -1, -2]}
         style={styles.textStyle}
         onClick={() => navigateToScene(ShadersScene)}
+      />
+      <ViroText
+        text="Geospatial Anchors"
+        scale={[0.5, 0.5, 0.5]}
+        position={[0, -1.5, -2]}
+        style={styles.textStyle}
+        onClick={() => navigateToScene(GeospatialAnchorScene)}
       />
     </ViroARScene>
   );
