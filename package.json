@@ -15,7 +15,7 @@
     "@react-navigation/bottom-tabs": "^7.4.0",
     "@react-navigation/elements": "^2.6.3",
     "@react-navigation/native": "^7.1.8",
-    "@reactvision/react-viro": "^2.53.1",
+    "@reactvision/react-viro": "^2.54.0",
     "expo": "~54.0.30",
     "expo-constants": "~18.0.12",
     "expo-font": "~14.0.10",
