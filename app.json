@@ -7,7 +7,6 @@
     "icon": "./assets/images/icon.png",
     "scheme": "expostartkit",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.anonymous.expo-starter-kit-typescript",
@@ -30,7 +29,6 @@
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
-      "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
     },
     "web": {
@@ -68,7 +66,10 @@
           "rvApiKey": "Add your API key here",
           "rvProjectId": "Add your project ID here"
         }
-      ]
+      ],
+      "expo-font",
+      "expo-image",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true,

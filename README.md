@@ -319,7 +319,7 @@ The Physics Demo scene demonstrates ViroReact's built-in physics engine capabili
 ## Installation
 
 ```shell
-npm install
+yarn install
 ```
 
 ## Setup
