@@ -3321,18 +3321,6 @@ expo-glass-effect@^57.0.0:
   resolved "https://registry.yarnpkg.com/expo-glass-effect/-/expo-glass-effect-57.0.0.tgz#2842ae7d49305ebbc18bed27b5eca543ce1f24d2"
   integrity sha512-QadzKSKpjXOlkIEnkX7SqHwCgUJZLjhWUvg1AauaUgKVnz35Ror41juM4y+KNr9pFxnukSDUz8L+UvdZVCNu6Q==
 
-expo-haptics@~57.0.0:
-  version "57.0.0"
-  resolved "https://registry.yarnpkg.com/expo-haptics/-/expo-haptics-57.0.0.tgz#8dfda842d5a7a0c0fc1af8a8063bf402d77a7eeb"
-  integrity sha512-va+uB/DoMlT9f0OJ8v24iNqs+YH6Q6wip+LLjVvalbJzGK8LvZQ+gIiauogFxAAFLQIJzrQVJGf+0BmV3q13bQ==
-
-expo-image@~57.0.0:
-  version "57.0.0"
-  resolved "https://registry.yarnpkg.com/expo-image/-/expo-image-57.0.0.tgz#10b60f69be16f3278cd4cf2ba2c074d14e30fc61"
-  integrity sha512-vR7q07izYiPzUDBCBZf9t6EmtCPp9mIvWimX0TqWQb17AKg/wZytuJD6VWLQxnUlzqXsVBysNcz1jnXkBBQrIg==
-  dependencies:
-    sf-symbols-typescript "^2.2.0"
-
 expo-keep-awake@~57.0.0:
   version "57.0.0"
   resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-57.0.0.tgz#718bb57f9e62205092dc7fa783a10d5d95a8480d"
@@ -3431,26 +3419,13 @@ expo-status-bar@~57.0.0:
   resolved "https://registry.yarnpkg.com/expo-status-bar/-/expo-status-bar-57.0.0.tgz#724313f13127dd6cbf1d2d6644e62a13574671b4"
   integrity sha512-wq1fDVAjfrzCj67hOcvEkGpgRrb6xVI7oSA3bfsQ08SFk8il7vGixJq+xyEbtdcrI9CDiNKQrT3ZIjgnyGbbBA==
 
-expo-symbols@^57.0.0, expo-symbols@~57.0.0:
+expo-symbols@^57.0.0:
   version "57.0.0"
   resolved "https://registry.yarnpkg.com/expo-symbols/-/expo-symbols-57.0.0.tgz#719dd1d26e0990273eada6dee722d6522197ef9f"
   integrity sha512-pLjyiSqOV8NEqs2LqVZmF0cS1j90XoeT2oHbFciVjW7DiV7cP34SGLUgeDsOWY54QkWFR5p2Gz9LZWM8eBsSkA==
   dependencies:
     "@expo-google-fonts/material-symbols" "^0.4.1"
     sf-symbols-typescript "^2.0.0"
-
-expo-system-ui@~57.0.0:
-  version "57.0.0"
-  resolved "https://registry.yarnpkg.com/expo-system-ui/-/expo-system-ui-57.0.0.tgz#4d4d578a2430a849e05d15afacf8246524a4fde0"
-  integrity sha512-jkGRY0RQsncEhaCPdoiNbRCPAe8q5kFrrMbkiLr7p0oFMMY8LOviSKBpUXLnuwzM1gHC/J531tntrhj+nwpFZA==
-  dependencies:
-    "@react-native/normalize-colors" "0.86.0"
-    debug "^4.3.2"
-
-expo-web-browser@~57.0.0:
-  version "57.0.0"
-  resolved "https://registry.yarnpkg.com/expo-web-browser/-/expo-web-browser-57.0.0.tgz#72b7e406d86c3f05dcc0c0a7af30311f4a768a62"
-  integrity sha512-J+kQAqbH423Ge6YXrQTVKkmH+cS2SSjnc7ocoRDjhmfZ2+XSBXX3Ogds5/aEKjNKUe7ObtPMkVq9uWbXJv4BGw==
 
 expo@^57.0.4:
   version "57.0.4"
@@ -5637,7 +5612,7 @@ setprototypeof@~1.2.0:
   resolved "https://registry.npmjs.org/setprototypeof/-/setprototypeof-1.2.0.tgz"
   integrity sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==
 
-sf-symbols-typescript@^2.0.0, sf-symbols-typescript@^2.1.0, sf-symbols-typescript@^2.2.0:
+sf-symbols-typescript@^2.0.0, sf-symbols-typescript@^2.1.0:
   version "2.2.0"
   resolved "https://registry.npmjs.org/sf-symbols-typescript/-/sf-symbols-typescript-2.2.0.tgz"
   integrity sha512-TPbeg0b7ylrswdGCji8FRGFAKuqbpQlLbL8SOle3j1iHSs5Ob5mhvMAxWN2UItOjgALAB5Zp3fmMfj8mbWvXKw==

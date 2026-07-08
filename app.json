@@ -67,9 +67,6 @@
           "rvProjectId": "Add your project ID here"
         }
       ],
-      "expo-font",
-      "expo-image",
-      "expo-web-browser",
       "expo-status-bar"
     ],
     "experiments": {
