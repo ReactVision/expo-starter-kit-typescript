@@ -7,6 +7,7 @@ import {
   ViroAmbientLight,
   ViroMaterials,
 } from "@reactvision/react-viro";
+import { SceneProps, Viro3DPoint } from "./types";
 
 ViroMaterials.createMaterials({
   boxMaterial: {
@@ -14,17 +15,13 @@ ViroMaterials.createMaterials({
   },
 });
 
-interface NoPlaneSceneProps {
-  sceneNavigator?: any;
-}
-
-const NoPlaneScene = (props: NoPlaneSceneProps = {}) => {
+const NoPlaneScene = (props: SceneProps = {}) => {
   const { sceneNavigator } = props;
   const goBack = () => {
-    sceneNavigator.pop();
+    sceneNavigator?.pop();
   };
 
-  const onDrag = (dragToPos: any, source: any) => {
+  const onDrag = (dragToPos: Viro3DPoint) => {
     console.log("Box dragged to position:", dragToPos);
   };
 

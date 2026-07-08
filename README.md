@@ -7,6 +7,16 @@ ViroReact AR/VR starter kit for Expo with TypeScript.
 - ViroReact requires native code and **cannot run in Expo Go**
 - You must use development builds or prebuild to run this project
 
+## Quick Start
+
+```shell
+yarn install
+npx expo prebuild --clean    # generate the native ios/ and android/ dirs
+npx expo run:ios             # or: npx expo run:android
+```
+
+Six of the seven demos run with zero configuration. Only the **Geospatial Anchor** demo needs API keys (see [Configuration](#configuration)). For the optional depth model and troubleshooting, see [Setup](#setup) and [Running](#running) below.
+
 ## Project Demos
 
 This starter kit demonstrates multiple AR scenarios to help you understand how ViroReact works.
@@ -138,11 +148,11 @@ The app uses `ViroARSceneNavigator` to manage scene transitions. Each scene rece
 
 **Key Viro Components**:
 - `ViroARScene`: Container with physics world configuration
-  - `physicsWorld={{ gravity: -9.8 }}`: Enables physics simulation with Earth-like gravity
+  - `physicsWorld={{ gravity: [0, -9.8, 0] }}`: Enables physics simulation with Earth-like gravity
 - `ViroARPlaneSelector`: Allows user to select a plane for the bowling alley
   - `minHeight={0.3}` and `minWidth={0.3}`: Minimum plane dimensions
   - `onPlaneSelected`: Callback when user selects a plane
-  - `key={resetKey}`: Forces scene remount for clean physics reset
+- `ViroNode` (keyed): wraps the dynamic pins and ball so bumping its `key` remounts only those objects for a clean reset, while the plane selector stays mounted and keeps its detected planes
 - `ViroBox`: Used for multiple purposes:
   - Bowling alley surface (black, 0.8 opacity)
   - Bowling pins (white, dynamic physics bodies)
@@ -177,8 +187,8 @@ The app uses `ViroARSceneNavigator` to manage scene transitions. Each scene rece
 5. Tap "Back" to return to the opening scene
 
 **Physics Optimizations**:
-- Objects that fall below Y = -0.5 automatically trigger a scene reset
-- Scene uses a key-based reset system to properly clear physics state
+- If the ball or a pin falls below Y = -0.5, `onTransformUpdate` remounts the dynamic objects to bring them back
+- Reset (button or automatic) remounts only the pins and ball via a keyed `ViroNode`, clearing their physics without disturbing the selected plane
 - Boundary walls prevent infinite falling (which caused memory crashes)
 
 ---
@@ -282,7 +292,7 @@ This configuration is essential for using `require()` to load 3D assets.
 The Physics Demo scene demonstrates ViroReact's built-in physics engine capabilities:
 
 **Physics World Setup**:
-- Configured on `ViroARScene` with `physicsWorld={{ gravity: -9.8 }}`
+- Configured on `ViroARScene` with `physicsWorld={{ gravity: [0, -9.8, 0] }}`
 - Gravity value in m/s² (negative Y direction)
 - Affects all objects with `useGravity: true` in their physics body
 
@@ -314,13 +324,24 @@ The Physics Demo scene demonstrates ViroReact's built-in physics engine capabili
 - Keep mass ratios reasonable (ball 10x heavier than pins works well)
 - Add boundary walls to prevent infinite falling
 - Monitor object positions with `onTransformUpdate` for cleanup
-- Use key-based resets to properly clear physics state
+- Reset physics by remounting the dynamic objects (a keyed wrapper node), not the plane selector
 
 ## Installation
 
 ```shell
 yarn install
 ```
+
+## Configuration
+
+Six of the seven demos run with no setup. The **Geospatial Anchor** demo is the only one that needs credentials. Fill these placeholders in `app.json` before running `prebuild`:
+
+| Key (`app.json`) | Purpose |
+| --- | --- |
+| `rvApiKey`, `rvProjectId` | ReactVision Geospatial backend, from your [ReactVision account](https://reactvision.xyz/viro-react?source=starterkit-readme) |
+| `googleCloudApiKey` and iOS `GARAPIKey` | Google ARCore Geospatial / VPS (a Google Cloud API key with the ARCore API enabled) |
+
+Leave the placeholders untouched if you're not using the Geospatial demo; the rest of the app is unaffected. See [Geospatial Anchor Scene](#7-geospatial-anchor-scene) for setup links.
 
 ## Setup
 

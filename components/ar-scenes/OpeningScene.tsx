@@ -7,14 +7,11 @@ import ManualPlaneScene from "./ManualPlaneScene";
 import NoPlaneScene from "./NoPlaneScene";
 import PhysicsDemo from "./PhysicsDemo";
 import ShadersScene from "./ShadersScene";
+import { SceneProps } from "./types";
 
-interface OpeningSceneProps {
-  sceneNavigator?: any;
-}
-
-const OpeningScene = (props: OpeningSceneProps = {}) => {
-  const navigateToScene = (scene: any) => {
-    props.sceneNavigator.push({ scene });
+const OpeningScene = (props: SceneProps = {}) => {
+  const navigateToScene = (scene: React.ComponentType) => {
+    props.sceneNavigator?.push({ scene });
   };
 
   return (

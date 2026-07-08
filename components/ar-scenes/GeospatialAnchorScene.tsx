@@ -9,6 +9,7 @@ import {
   ViroAmbientLight,
   ViroMaterials,
 } from "@reactvision/react-viro";
+import { SceneProps } from "./types";
 
 ViroMaterials.createMaterials({
   greenMaterial: {
@@ -39,12 +40,7 @@ const isValidLocation = (p: GeospatialPose | null): p is GeospatialPose =>
   p != null &&
   !(p.latitude === 0 && p.longitude === 0 && p.horizontalAccuracy === 0);
 
-interface GeospatialAnchorSceneProps {
-  sceneNavigator?: any;
-  arSceneNavigator?: any;
-}
-
-const GeospatialAnchorScene = (props: GeospatialAnchorSceneProps = {}) => {
+const GeospatialAnchorScene = (props: SceneProps = {}) => {
   const navigator = props.arSceneNavigator ?? props.sceneNavigator;
   const [pose, setPose] = useState<GeospatialPose | null>(null);
   const [anchors, setAnchors] = useState<AnchorInfo[]>([]);

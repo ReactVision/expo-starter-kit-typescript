@@ -9,7 +9,7 @@ import {
   ViroMaterials,
   ViroSpotLight,
 } from "@reactvision/react-viro";
-import { Viro3DPoint } from "@reactvision/react-viro/dist/components/Types/ViroUtils";
+import { SceneProps, Viro3DPoint } from "./types";
 
 // Define Materials with Shader Modifiers
 ViroMaterials.createMaterials({
@@ -338,11 +338,7 @@ const SPHERES = [
   },
 ];
 
-interface ShadersSceneProps {
-  sceneNavigator?: any;
-}
-
-const ShadersScene = (props: ShadersSceneProps = {}) => {
+const ShadersScene = (props: SceneProps = {}) => {
   const { sceneNavigator } = props;
 
   // Update shader time uniforms for animation
@@ -360,7 +356,7 @@ const ShadersScene = (props: ShadersSceneProps = {}) => {
   }, []);
 
   const goBack = () => {
-    sceneNavigator.pop();
+    sceneNavigator?.pop();
   };
 
   return (

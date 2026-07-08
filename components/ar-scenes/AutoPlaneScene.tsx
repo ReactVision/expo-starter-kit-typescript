@@ -7,12 +7,9 @@ import {
   Viro3DObject,
   ViroAmbientLight,
 } from "@reactvision/react-viro";
+import { SceneProps, Viro3DPoint } from "./types";
 
-interface AutoPlaneSceneProps {
-  sceneNavigator?: any;
-}
-
-const AutoPlaneScene = (props: AutoPlaneSceneProps = {}) => {
+const AutoPlaneScene = (props: SceneProps = {}) => {
   const { sceneNavigator } = props;
   const [planeDetected, setPlaneDetected] = useState(false);
 
@@ -21,10 +18,10 @@ const AutoPlaneScene = (props: AutoPlaneSceneProps = {}) => {
   };
 
   const goBack = () => {
-    sceneNavigator.pop();
+    sceneNavigator?.pop();
   };
 
-  const onDrag = (dragToPos: any, source: any) => {
+  const onDrag = (dragToPos: Viro3DPoint) => {
     console.log("Robot dragged to position:", dragToPos);
   };
 
