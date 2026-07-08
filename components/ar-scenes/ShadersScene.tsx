@@ -86,7 +86,6 @@ ViroMaterials.createMaterials({
     lightingModel: "Blinn",
     shininess: 300.0,
     blendMode: "Alpha",
-    transparencyMode: "RGBZero",
     cullMode: "None",
     shaderModifiers: {
       geometry: `
@@ -186,7 +185,6 @@ ViroMaterials.createMaterials({
     lightingModel: "Blinn",
     shininess: 150.0,
     blendMode: "Alpha",
-    transparencyMode: "RGBZero",
     cullMode: "None",
     shaderModifiers: {
       geometry: `
@@ -239,7 +237,6 @@ ViroMaterials.createMaterials({
     lightingModel: "Blinn",
     shininess: 200.0,
     blendMode: "Alpha",
-    transparencyMode: "RGBZero",
     shaderModifiers: {
       surface: `
         uniform highp float time;

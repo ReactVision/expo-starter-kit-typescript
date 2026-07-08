@@ -217,7 +217,7 @@ const GeospatialAnchorScene = (props: GeospatialAnchorSceneProps = {}) => {
         text="Host"
         scale={[0.3, 0.3, 0.3]}
         position={[0, 0.3, -0.7]}
-        style={[styles.textStyle, !canHost && styles.disabledText]}
+        style={canHost ? styles.textStyle : styles.textDisabled}
         onClick={canHost ? hostAnchor : undefined}
       />
 
@@ -225,7 +225,7 @@ const GeospatialAnchorScene = (props: GeospatialAnchorSceneProps = {}) => {
         text="Find Nearby"
         scale={[0.3, 0.3, 0.3]}
         position={[0.5, 0.3, -0.7]}
-        style={[styles.textStyle, !hasLocation && styles.disabledText]}
+        style={hasLocation ? styles.textStyle : styles.textDisabled}
         onClick={hasLocation ? findNearbyAnchors : undefined}
       />
 
@@ -262,8 +262,12 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
     textAlign: "center",
   },
-  disabledText: {
+  textDisabled: {
+    fontFamily: "Arial",
+    fontSize: 30,
     color: "#888888",
+    textAlignVertical: "center",
+    textAlign: "center",
   },
   statusText: {
     fontFamily: "Arial",

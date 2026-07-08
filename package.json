@@ -11,7 +11,8 @@
     "lint": "expo lint"
   },
   "dependencies": {
-    "@react-native-vector-icons/ionicons": "^13.1.2",
+    "@expo/material-symbols": "^0.1.1",
+    "@expo/ui": "~57.0.4",
     "@reactvision/react-viro": "^2.57.3",
     "expo": "^57.0.4",
     "expo-constants": "~57.0.3",
