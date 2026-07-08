@@ -1,4 +1,3 @@
-import React from "react";
 import { StyleSheet } from "react-native";
 import {
   ViroARScene,
@@ -7,6 +6,7 @@ import {
   ViroAmbientLight,
   ViroMaterials,
 } from "@reactvision/react-viro";
+import { SceneProps, Viro3DPoint } from "./types";
 
 ViroMaterials.createMaterials({
   boxMaterial: {
@@ -14,24 +14,20 @@ ViroMaterials.createMaterials({
   },
 });
 
-interface NoPlaneSceneProps {
-  sceneNavigator?: any;
-}
-
-const NoPlaneScene = (props: NoPlaneSceneProps = {}) => {
+const NoPlaneScene = (props: SceneProps = {}) => {
   const { sceneNavigator } = props;
   const goBack = () => {
-    sceneNavigator.pop();
+    sceneNavigator?.pop();
   };
 
-  const onDrag = (dragToPos: any, source: any) => {
+  const onDrag = (dragToPos: Viro3DPoint) => {
     console.log("Box dragged to position:", dragToPos);
   };
 
   return (
     <ViroARScene>
       <ViroAmbientLight color="#ffffff" intensity={200} />
-      
+
       <ViroText
         text="Back"
         scale={[0.3, 0.3, 0.3]}
@@ -47,7 +43,6 @@ const NoPlaneScene = (props: NoPlaneSceneProps = {}) => {
         style={styles.textStyle}
       />
 
-      
       <ViroBox
         position={[0, 0, -1]}
         scale={[0.1, 0.1, 0.1]}

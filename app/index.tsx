@@ -1,11 +1,20 @@
-import React from "react";
-import { StyleSheet, View, TouchableOpacity } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import { ViroARSceneNavigator } from "@reactvision/react-viro";
-import Ionicons from "@react-native-vector-icons/ionicons/static";
+import { Host, Button, Icon } from "@expo/ui";
+import {
+  buttonBorderShape,
+  buttonStyle,
+  labelStyle,
+} from "@expo/ui/swift-ui/modifiers";
 import { useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import OpeningScene from "@/components/ar-scenes/OpeningScene";
 import { useSettings } from "@/contexts/SettingsContext";
+
+const SETTINGS_ICON = Icon.select({
+  ios: "gearshape.fill",
+  android: import("@expo/material-symbols/settings.xml"),
+});
 
 export default function ARHome() {
   const router = useRouter();
@@ -35,19 +44,25 @@ export default function ARHome() {
         style={styles.arNavigator}
         occlusionMode={occlusionEnabled ? "depthBased" : "disabled"}
       />
-      <TouchableOpacity
-        style={[
-          styles.settingsButton,
-          {
-            top: insets.top + 16,
-            right: 16,
-          },
-        ]}
-        onPress={() => router.push("/settings")}
-        activeOpacity={0.7}
+      <Host
+        matchContents
+        style={[styles.settingsButton, { top: insets.top + 16, right: 16 }]}
       >
-        <Ionicons name="settings" size={24} color="#000" />
-      </TouchableOpacity>
+        <Button
+          modifiers={
+            Platform.OS === "ios"
+              ? [
+                  buttonStyle("glass"),
+                  buttonBorderShape("circle"),
+                  labelStyle("iconOnly"),
+                ]
+              : undefined
+          }
+          onPress={() => router.push("/settings")}
+        >
+          <Icon name={SETTINGS_ICON} size={24} />
+        </Button>
+      </Host>
     </View>
   );
 }
@@ -61,11 +76,5 @@ const styles = StyleSheet.create({
   },
   settingsButton: {
     position: "absolute",
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: "#ffffff",
-    justifyContent: "center",
-    alignItems: "center",
   },
 });

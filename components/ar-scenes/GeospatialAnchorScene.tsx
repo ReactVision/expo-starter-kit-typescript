@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { StyleSheet, Alert } from "react-native";
 import * as Location from "expo-location";
 import {
@@ -9,6 +9,7 @@ import {
   ViroAmbientLight,
   ViroMaterials,
 } from "@reactvision/react-viro";
+import { SceneProps } from "./types";
 
 ViroMaterials.createMaterials({
   greenMaterial: {
@@ -39,13 +40,9 @@ const isValidLocation = (p: GeospatialPose | null): p is GeospatialPose =>
   p != null &&
   !(p.latitude === 0 && p.longitude === 0 && p.horizontalAccuracy === 0);
 
-interface GeospatialAnchorSceneProps {
-  sceneNavigator?: any;
-  arSceneNavigator?: any;
-}
-
-const GeospatialAnchorScene = (props: GeospatialAnchorSceneProps = {}) => {
-  const navigator = props.arSceneNavigator ?? props.sceneNavigator;
+const GeospatialAnchorScene = (props: SceneProps = {}) => {
+  const { sceneNavigator } = props;
+  const [locationGranted, setLocationGranted] = useState(false);
   const [pose, setPose] = useState<GeospatialPose | null>(null);
   const [anchors, setAnchors] = useState<AnchorInfo[]>([]);
   const [isHosting, setIsHosting] = useState(false);
@@ -53,17 +50,17 @@ const GeospatialAnchorScene = (props: GeospatialAnchorSceneProps = {}) => {
   const poseIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const goBack = () => {
-    navigator?.pop?.();
+    sceneNavigator?.pop();
   };
 
   const resolveAndPlaceAnchor = useCallback(
     async (anchorId: string) => {
-      if (!navigator?.resolveGeospatialAnchor) {
+      if (!sceneNavigator?.resolveGeospatialAnchor) {
         Alert.alert("Error", "Failed to resolve anchor");
         return;
       }
 
-      const result = await navigator.resolveGeospatialAnchor(anchorId);
+      const result = await sceneNavigator.resolveGeospatialAnchor(anchorId);
       if (!result.success || !result.anchor) {
         console.warn("Resolve failed:", result.error);
         return;
@@ -81,7 +78,7 @@ const GeospatialAnchorScene = (props: GeospatialAnchorSceneProps = {}) => {
         prev.some((a) => a.id === newAnchor.id) ? prev : [...prev, newAnchor],
       );
     },
-    [navigator],
+    [sceneNavigator],
   );
 
   const hostAnchor = useCallback(async () => {
@@ -97,11 +94,11 @@ const GeospatialAnchorScene = (props: GeospatialAnchorSceneProps = {}) => {
       return;
     }
 
-    if (!navigator?.hostGeospatialAnchor) return;
+    if (!sceneNavigator?.hostGeospatialAnchor) return;
     setIsHosting(true);
     setStatus("Hosting...");
     try {
-      const result = await navigator.hostGeospatialAnchor(
+      const result = await sceneNavigator.hostGeospatialAnchor(
         pose.latitude,
         pose.longitude,
         pose.altitude,
@@ -123,15 +120,15 @@ const GeospatialAnchorScene = (props: GeospatialAnchorSceneProps = {}) => {
     } finally {
       setIsHosting(false);
     }
-  }, [pose, navigator, resolveAndPlaceAnchor]);
+  }, [pose, sceneNavigator, resolveAndPlaceAnchor]);
 
   const findNearbyAnchors = useCallback(async () => {
     if (!isValidLocation(pose)) return;
 
-    if (!navigator?.rvFindNearbyGeospatialAnchors) return;
+    if (!sceneNavigator?.rvFindNearbyGeospatialAnchors) return;
     setStatus("Finding nearby...");
     try {
-      const result = await navigator.rvFindNearbyGeospatialAnchors(
+      const result = await sceneNavigator.rvFindNearbyGeospatialAnchors(
         pose.latitude,
         pose.longitude,
         500,
@@ -150,13 +147,15 @@ const GeospatialAnchorScene = (props: GeospatialAnchorSceneProps = {}) => {
     } catch {
       setStatus("Find nearby failed");
     }
-  }, [pose, navigator, resolveAndPlaceAnchor]);
+  }, [pose, sceneNavigator, resolveAndPlaceAnchor]);
 
   useEffect(() => {
     (async () => {
       const { status: permStatus } =
         await Location.requestForegroundPermissionsAsync();
-      if (permStatus !== "granted") {
+      if (permStatus === "granted") {
+        setLocationGranted(true);
+      } else {
         Alert.alert(
           "Location Required",
           "Enable location to use geospatial AR.",
@@ -167,12 +166,12 @@ const GeospatialAnchorScene = (props: GeospatialAnchorSceneProps = {}) => {
   }, []);
 
   const startGeospatial = useCallback(() => {
-    if (!navigator) return;
-    navigator.setGeospatialModeEnabled(true);
+    if (!sceneNavigator) return;
+    sceneNavigator.setGeospatialModeEnabled(true);
     setStatus("Acquiring geospatial pose…");
     poseIntervalRef.current = setInterval(async () => {
       try {
-        const result = await navigator.getCameraGeospatialPose();
+        const result = await sceneNavigator.getCameraGeospatialPose();
         if (result.success && result.pose) {
           setPose(result.pose);
           if (isValidLocation(result.pose)) {
@@ -185,15 +184,16 @@ const GeospatialAnchorScene = (props: GeospatialAnchorSceneProps = {}) => {
         console.warn("Pose poll error:", error);
       }
     }, 1000);
-  }, [navigator]);
+  }, [sceneNavigator]);
 
   useEffect(() => {
+    if (!locationGranted) return;
     const timer = setTimeout(startGeospatial, 2000);
     return () => {
       clearTimeout(timer);
       if (poseIntervalRef.current) clearInterval(poseIntervalRef.current);
     };
-  }, [startGeospatial]);
+  }, [locationGranted, startGeospatial]);
 
   const hasLocation = isValidLocation(pose);
   const canHost =
@@ -217,7 +217,7 @@ const GeospatialAnchorScene = (props: GeospatialAnchorSceneProps = {}) => {
         text="Host"
         scale={[0.3, 0.3, 0.3]}
         position={[0, 0.3, -0.7]}
-        style={[styles.textStyle, !canHost && styles.disabledText]}
+        style={canHost ? styles.textStyle : styles.textDisabled}
         onClick={canHost ? hostAnchor : undefined}
       />
 
@@ -225,7 +225,7 @@ const GeospatialAnchorScene = (props: GeospatialAnchorSceneProps = {}) => {
         text="Find Nearby"
         scale={[0.3, 0.3, 0.3]}
         position={[0.5, 0.3, -0.7]}
-        style={[styles.textStyle, !hasLocation && styles.disabledText]}
+        style={hasLocation ? styles.textStyle : styles.textDisabled}
         onClick={hasLocation ? findNearbyAnchors : undefined}
       />
 
@@ -262,8 +262,12 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
     textAlign: "center",
   },
-  disabledText: {
+  textDisabled: {
+    fontFamily: "Arial",
+    fontSize: 30,
     color: "#888888",
+    textAlignVertical: "center",
+    textAlign: "center",
   },
   statusText: {
     fontFamily: "Arial",

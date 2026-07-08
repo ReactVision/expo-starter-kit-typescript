@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { StyleSheet } from "react-native";
 import {
   ViroARScene,
@@ -7,8 +7,10 @@ import {
   ViroAmbientLight,
   ViroBox,
   ViroMaterials,
+  ViroNode,
   ViroSphere,
 } from "@reactvision/react-viro";
+import { SceneProps, Viro3DPoint } from "./types";
 
 ViroMaterials.createMaterials({
   alleyMaterial: {
@@ -25,45 +27,30 @@ ViroMaterials.createMaterials({
   },
 });
 
-interface PhysicsDemoProps {
-  sceneNavigator?: any;
-}
-
-const PhysicsDemo = (props: PhysicsDemoProps = {}) => {
+const PhysicsDemo = (props: SceneProps = {}) => {
   const { sceneNavigator } = props;
   const [planeSelected, setPlaneSelected] = useState(false);
   const [resetKey, setResetKey] = useState(0); // Key to force re-render and reset physics
 
-  const ballRef = useRef<any>(null);
   const selectorRef = useRef<ViroARPlaneSelector>(null);
 
-  const FALL_THRESHOLD = -0.5; // Reset objects that fall below this Y position
-  const INITIAL_BALL_POS: [number, number, number] = [0, 0.1, 0.25];
+  const INITIAL_BALL_POS: Viro3DPoint = [0, 0.1, 0.25];
 
   const onPlaneSelected = () => {
     setPlaneSelected(true);
   };
 
   const goBack = () => {
-    sceneNavigator.pop();
+    sceneNavigator?.pop();
   };
 
   const handleReset = () => {
-    console.log("Resetting game...");
-    // Increment key to force all objects to remount with initial positions
+    // Bump the key to remount the ball and pins at their start positions.
     setResetKey((prev) => prev + 1);
   };
 
-  const onDrag = (dragToPos: any, source: any) => {
+  const onDrag = (dragToPos: Viro3DPoint) => {
     console.log("Ball dragged to position:", dragToPos);
-  };
-
-  // Check and reset ball if it falls too far
-  const onBallUpdate = (position: number[]) => {
-    if (position[1] < FALL_THRESHOLD) {
-      console.log("Ball fell too far, resetting...");
-      handleReset();
-    }
   };
 
   return (
@@ -116,7 +103,6 @@ const PhysicsDemo = (props: PhysicsDemoProps = {}) => {
         minHeight={0.3}
         minWidth={0.3}
         onPlaneSelected={onPlaneSelected}
-        key={`plane-${resetKey}`}
       >
         {/* Bowling Alley - Long black box */}
         <ViroBox
@@ -189,81 +175,80 @@ const PhysicsDemo = (props: PhysicsDemoProps = {}) => {
           }}
         />
 
-        {/* Bowling Pins - Simple ViroBox components in triangle formation */}
-        {/* Front Pin (closest to player) */}
-        <ViroBox
-          position={[0, 0.09, -0.5]}
-          width={0.04}
-          height={0.12}
-          length={0.04}
-          materials={["pinMaterial"]}
-          physicsBody={{
-            type: "Dynamic",
-            mass: 0.3,
-            shape: { type: "Box", params: [0.04, 0.12, 0.04] },
-            restitution: 0.3,
-            friction: 0.5,
-            useGravity: true,
-          }}
-        />
+        {/* Pins and ball are the Dynamic bodies. Remounting this node (via
+            key) recreates them at their start positions to reset the game.
+            Don't key the plane selector instead — that wipes its detected
+            planes and leaves an empty scene. */}
+        <ViroNode key={`objects-${resetKey}`}>
+          {/* Bowling Pins - Simple ViroBox components in triangle formation */}
+          {/* Front Pin (closest to player) */}
+          <ViroBox
+            position={[0, 0.09, -0.5]}
+            width={0.04}
+            height={0.12}
+            length={0.04}
+            materials={["pinMaterial"]}
+            physicsBody={{
+              type: "Dynamic",
+              mass: 0.3,
+              shape: { type: "Box", params: [0.04, 0.12, 0.04] },
+              restitution: 0.3,
+              friction: 0.5,
+              useGravity: true,
+            }}
+          />
 
-        {/* Back Left Pin */}
-        <ViroBox
-          position={[-0.06, 0.09, -0.6]}
-          width={0.04}
-          height={0.12}
-          length={0.04}
-          materials={["pinMaterial"]}
-          physicsBody={{
-            type: "Dynamic",
-            mass: 0.3,
-            shape: { type: "Box", params: [0.04, 0.12, 0.04] },
-            restitution: 0.3,
-            friction: 0.5,
-            useGravity: true,
-          }}
-        />
+          {/* Back Left Pin */}
+          <ViroBox
+            position={[-0.06, 0.09, -0.6]}
+            width={0.04}
+            height={0.12}
+            length={0.04}
+            materials={["pinMaterial"]}
+            physicsBody={{
+              type: "Dynamic",
+              mass: 0.3,
+              shape: { type: "Box", params: [0.04, 0.12, 0.04] },
+              restitution: 0.3,
+              friction: 0.5,
+              useGravity: true,
+            }}
+          />
 
-        {/* Back Right Pin */}
-        <ViroBox
-          position={[0.06, 0.09, -0.6]}
-          width={0.04}
-          height={0.12}
-          length={0.04}
-          materials={["pinMaterial"]}
-          physicsBody={{
-            type: "Dynamic",
-            mass: 0.3,
-            shape: { type: "Box", params: [0.04, 0.12, 0.04] },
-            restitution: 0.3,
-            friction: 0.5,
-            useGravity: true,
-          }}
-        />
+          {/* Back Right Pin */}
+          <ViroBox
+            position={[0.06, 0.09, -0.6]}
+            width={0.04}
+            height={0.12}
+            length={0.04}
+            materials={["pinMaterial"]}
+            physicsBody={{
+              type: "Dynamic",
+              mass: 0.3,
+              shape: { type: "Box", params: [0.04, 0.12, 0.04] },
+              restitution: 0.3,
+              friction: 0.5,
+              useGravity: true,
+            }}
+          />
 
-        {/* Bowling Ball - Draggable Sphere */}
-
-        <ViroSphere
-          ref={ballRef}
-          position={INITIAL_BALL_POS}
-          onTransformUpdate={(updateObject: any) => {
-            if (updateObject?.position) {
-              onBallUpdate(updateObject.position);
-            }
-          }}
-          radius={0.06}
-          materials={["ballMaterial"]}
-          dragType="FixedDistance"
-          onDrag={onDrag}
-          physicsBody={{
-            type: "Dynamic",
-            mass: 3.0,
-            shape: { type: "Sphere", params: [0.06] },
-            restitution: 0.5,
-            friction: 0.0,
-            useGravity: true,
-          }}
-        />
+          {/* Bowling Ball - Draggable Sphere */}
+          <ViroSphere
+            position={INITIAL_BALL_POS}
+            radius={0.06}
+            materials={["ballMaterial"]}
+            dragType="FixedDistance"
+            onDrag={onDrag}
+            physicsBody={{
+              type: "Dynamic",
+              mass: 3.0,
+              shape: { type: "Sphere", params: [0.06] },
+              restitution: 0.5,
+              friction: 0.0,
+              useGravity: true,
+            }}
+          />
+        </ViroNode>
       </ViroARPlaneSelector>
     </ViroARScene>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { StyleSheet } from "react-native";
 import {
   ViroARScene,
@@ -7,12 +7,9 @@ import {
   Viro3DObject,
   ViroAmbientLight,
 } from "@reactvision/react-viro";
+import { SceneProps } from "./types";
 
-interface ManualPlaneSceneProps {
-  sceneNavigator?: any;
-}
-
-const ManualPlaneScene = (props: ManualPlaneSceneProps = {}) => {
+const ManualPlaneScene = (props: SceneProps = {}) => {
   const { sceneNavigator } = props;
   const [planeSelected, setPlaneSelected] = useState(false);
   const selectorRef = useRef<ViroARPlaneSelector>(null);
@@ -22,7 +19,7 @@ const ManualPlaneScene = (props: ManualPlaneSceneProps = {}) => {
   };
 
   const goBack = () => {
-    sceneNavigator.pop();
+    sceneNavigator?.pop();
   };
 
   return (

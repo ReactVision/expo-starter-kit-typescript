@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import {
   ViroARScene,
@@ -9,7 +9,7 @@ import {
   ViroMaterials,
   ViroSpotLight,
 } from "@reactvision/react-viro";
-import { Viro3DPoint } from "@reactvision/react-viro/dist/components/Types/ViroUtils";
+import { SceneProps, Viro3DPoint } from "./types";
 
 // Define Materials with Shader Modifiers
 ViroMaterials.createMaterials({
@@ -86,7 +86,6 @@ ViroMaterials.createMaterials({
     lightingModel: "Blinn",
     shininess: 300.0,
     blendMode: "Alpha",
-    transparencyMode: "RGBZero",
     cullMode: "None",
     shaderModifiers: {
       geometry: `
@@ -186,7 +185,6 @@ ViroMaterials.createMaterials({
     lightingModel: "Blinn",
     shininess: 150.0,
     blendMode: "Alpha",
-    transparencyMode: "RGBZero",
     cullMode: "None",
     shaderModifiers: {
       geometry: `
@@ -239,7 +237,6 @@ ViroMaterials.createMaterials({
     lightingModel: "Blinn",
     shininess: 200.0,
     blendMode: "Alpha",
-    transparencyMode: "RGBZero",
     shaderModifiers: {
       surface: `
         uniform highp float time;
@@ -341,11 +338,7 @@ const SPHERES = [
   },
 ];
 
-interface ShadersSceneProps {
-  sceneNavigator?: any;
-}
-
-const ShadersScene = (props: ShadersSceneProps = {}) => {
+const ShadersScene = (props: SceneProps = {}) => {
   const { sceneNavigator } = props;
 
   // Update shader time uniforms for animation
@@ -363,7 +356,7 @@ const ShadersScene = (props: ShadersSceneProps = {}) => {
   }, []);
 
   const goBack = () => {
-    sceneNavigator.pop();
+    sceneNavigator?.pop();
   };
 
   return (
