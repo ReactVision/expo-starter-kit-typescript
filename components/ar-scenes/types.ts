@@ -14,5 +14,4 @@ export type SceneNavigator = Omit<ViroSceneNavigator, "push"> & {
 
 export type SceneProps = {
   sceneNavigator?: SceneNavigator;
-  arSceneNavigator?: SceneNavigator;
 };

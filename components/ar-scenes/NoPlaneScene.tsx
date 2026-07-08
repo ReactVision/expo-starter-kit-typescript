@@ -1,4 +1,3 @@
-import React from "react";
 import { StyleSheet } from "react-native";
 import {
   ViroARScene,
@@ -28,7 +27,7 @@ const NoPlaneScene = (props: SceneProps = {}) => {
   return (
     <ViroARScene>
       <ViroAmbientLight color="#ffffff" intensity={200} />
-      
+
       <ViroText
         text="Back"
         scale={[0.3, 0.3, 0.3]}
@@ -44,7 +43,6 @@ const NoPlaneScene = (props: SceneProps = {}) => {
         style={styles.textStyle}
       />
 
-      
       <ViroBox
         position={[0, 0, -1]}
         scale={[0.1, 0.1, 0.1]}

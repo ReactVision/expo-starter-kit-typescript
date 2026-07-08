@@ -77,8 +77,4 @@ const styles = StyleSheet.create({
   settingsButton: {
     position: "absolute",
   },
-  settingsButtonInner: {
-    width: 70,
-    height: 70,
-  },
 });

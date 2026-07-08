@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { StyleSheet, Alert } from "react-native";
 import * as Location from "expo-location";
 import {
@@ -41,7 +41,8 @@ const isValidLocation = (p: GeospatialPose | null): p is GeospatialPose =>
   !(p.latitude === 0 && p.longitude === 0 && p.horizontalAccuracy === 0);
 
 const GeospatialAnchorScene = (props: SceneProps = {}) => {
-  const navigator = props.arSceneNavigator ?? props.sceneNavigator;
+  const { sceneNavigator } = props;
+  const [locationGranted, setLocationGranted] = useState(false);
   const [pose, setPose] = useState<GeospatialPose | null>(null);
   const [anchors, setAnchors] = useState<AnchorInfo[]>([]);
   const [isHosting, setIsHosting] = useState(false);
@@ -49,17 +50,17 @@ const GeospatialAnchorScene = (props: SceneProps = {}) => {
   const poseIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const goBack = () => {
-    navigator?.pop?.();
+    sceneNavigator?.pop();
   };
 
   const resolveAndPlaceAnchor = useCallback(
     async (anchorId: string) => {
-      if (!navigator?.resolveGeospatialAnchor) {
+      if (!sceneNavigator?.resolveGeospatialAnchor) {
         Alert.alert("Error", "Failed to resolve anchor");
         return;
       }
 
-      const result = await navigator.resolveGeospatialAnchor(anchorId);
+      const result = await sceneNavigator.resolveGeospatialAnchor(anchorId);
       if (!result.success || !result.anchor) {
         console.warn("Resolve failed:", result.error);
         return;
@@ -77,7 +78,7 @@ const GeospatialAnchorScene = (props: SceneProps = {}) => {
         prev.some((a) => a.id === newAnchor.id) ? prev : [...prev, newAnchor],
       );
     },
-    [navigator],
+    [sceneNavigator],
   );
 
   const hostAnchor = useCallback(async () => {
@@ -93,11 +94,11 @@ const GeospatialAnchorScene = (props: SceneProps = {}) => {
       return;
     }
 
-    if (!navigator?.hostGeospatialAnchor) return;
+    if (!sceneNavigator?.hostGeospatialAnchor) return;
     setIsHosting(true);
     setStatus("Hosting...");
     try {
-      const result = await navigator.hostGeospatialAnchor(
+      const result = await sceneNavigator.hostGeospatialAnchor(
         pose.latitude,
         pose.longitude,
         pose.altitude,
@@ -119,15 +120,15 @@ const GeospatialAnchorScene = (props: SceneProps = {}) => {
     } finally {
       setIsHosting(false);
     }
-  }, [pose, navigator, resolveAndPlaceAnchor]);
+  }, [pose, sceneNavigator, resolveAndPlaceAnchor]);
 
   const findNearbyAnchors = useCallback(async () => {
     if (!isValidLocation(pose)) return;
 
-    if (!navigator?.rvFindNearbyGeospatialAnchors) return;
+    if (!sceneNavigator?.rvFindNearbyGeospatialAnchors) return;
     setStatus("Finding nearby...");
     try {
-      const result = await navigator.rvFindNearbyGeospatialAnchors(
+      const result = await sceneNavigator.rvFindNearbyGeospatialAnchors(
         pose.latitude,
         pose.longitude,
         500,
@@ -146,13 +147,15 @@ const GeospatialAnchorScene = (props: SceneProps = {}) => {
     } catch {
       setStatus("Find nearby failed");
     }
-  }, [pose, navigator, resolveAndPlaceAnchor]);
+  }, [pose, sceneNavigator, resolveAndPlaceAnchor]);
 
   useEffect(() => {
     (async () => {
       const { status: permStatus } =
         await Location.requestForegroundPermissionsAsync();
-      if (permStatus !== "granted") {
+      if (permStatus === "granted") {
+        setLocationGranted(true);
+      } else {
         Alert.alert(
           "Location Required",
           "Enable location to use geospatial AR.",
@@ -163,12 +166,12 @@ const GeospatialAnchorScene = (props: SceneProps = {}) => {
   }, []);
 
   const startGeospatial = useCallback(() => {
-    if (!navigator) return;
-    navigator.setGeospatialModeEnabled(true);
+    if (!sceneNavigator) return;
+    sceneNavigator.setGeospatialModeEnabled(true);
     setStatus("Acquiring geospatial pose…");
     poseIntervalRef.current = setInterval(async () => {
       try {
-        const result = await navigator.getCameraGeospatialPose();
+        const result = await sceneNavigator.getCameraGeospatialPose();
         if (result.success && result.pose) {
           setPose(result.pose);
           if (isValidLocation(result.pose)) {
@@ -181,15 +184,16 @@ const GeospatialAnchorScene = (props: SceneProps = {}) => {
         console.warn("Pose poll error:", error);
       }
     }, 1000);
-  }, [navigator]);
+  }, [sceneNavigator]);
 
   useEffect(() => {
+    if (!locationGranted) return;
     const timer = setTimeout(startGeospatial, 2000);
     return () => {
       clearTimeout(timer);
       if (poseIntervalRef.current) clearInterval(poseIntervalRef.current);
     };
-  }, [startGeospatial]);
+  }, [locationGranted, startGeospatial]);
 
   const hasLocation = isValidLocation(pose);
   const canHost =

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { StyleSheet } from "react-native";
 import {
   ViroARScene,

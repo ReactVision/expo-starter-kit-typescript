@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { StyleSheet } from "react-native";
 import {
   ViroARScene,
@@ -28,7 +28,7 @@ const AutoPlaneScene = (props: SceneProps = {}) => {
   return (
     <ViroARScene>
       <ViroAmbientLight color="#ffffff" intensity={200} />
-      
+
       <ViroText
         text="Back"
         scale={[0.3, 0.3, 0.3]}
@@ -60,7 +60,7 @@ const AutoPlaneScene = (props: SceneProps = {}) => {
           dragType="FixedToPlane"
           dragPlane={{
             planePoint: [0, 0, 0],
-            planeNormal: [0, 0.5, 0],
+            planeNormal: [0, 1, 0],
             maxDistance: 5
           }}
           onDrag={onDrag}

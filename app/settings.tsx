@@ -1,4 +1,3 @@
-import React from "react";
 import { Host, List, ListItem, Switch } from "@expo/ui";
 import { StatusBar } from "expo-status-bar";
 import { useSettings } from "@/contexts/SettingsContext";

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { StyleSheet } from "react-native";
 import {
   ViroARScene,
@@ -32,11 +32,9 @@ const PhysicsDemo = (props: SceneProps = {}) => {
   const [planeSelected, setPlaneSelected] = useState(false);
   const [resetKey, setResetKey] = useState(0); // Key to force re-render and reset physics
 
-  const ballRef = useRef<ViroSphere>(null);
   const selectorRef = useRef<ViroARPlaneSelector>(null);
 
-  const FALL_THRESHOLD = -0.5; // Reset objects that fall below this Y position
-  const INITIAL_BALL_POS: [number, number, number] = [0, 0.1, 0.25];
+  const INITIAL_BALL_POS: Viro3DPoint = [0, 0.1, 0.25];
 
   const onPlaneSelected = () => {
     setPlaneSelected(true);
@@ -47,21 +45,12 @@ const PhysicsDemo = (props: SceneProps = {}) => {
   };
 
   const handleReset = () => {
-    console.log("Resetting game...");
     // Bump the key to remount the ball and pins at their start positions.
     setResetKey((prev) => prev + 1);
   };
 
   const onDrag = (dragToPos: Viro3DPoint) => {
     console.log("Ball dragged to position:", dragToPos);
-  };
-
-  // Check and reset ball if it falls too far
-  const onBallUpdate = (position: number[]) => {
-    if (position[1] < FALL_THRESHOLD) {
-      console.log("Ball fell too far, resetting...");
-      handleReset();
-    }
   };
 
   return (
@@ -245,9 +234,7 @@ const PhysicsDemo = (props: SceneProps = {}) => {
 
           {/* Bowling Ball - Draggable Sphere */}
           <ViroSphere
-            ref={ballRef}
             position={INITIAL_BALL_POS}
-            onTransformUpdate={(position) => onBallUpdate(position)}
             radius={0.06}
             materials={["ballMaterial"]}
             dragType="FixedDistance"

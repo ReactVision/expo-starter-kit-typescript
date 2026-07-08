@@ -5,8 +5,8 @@ import {
   DefaultTheme,
 } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { useColorScheme } from 'react-native';
 import 'react-native-reanimated';
-import { useColorScheme } from '@/hooks/use-color-scheme';
 import { SettingsProvider } from '@/contexts/SettingsContext';
 
 export default function RootLayout() {

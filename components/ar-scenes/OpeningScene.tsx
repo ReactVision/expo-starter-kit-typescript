@@ -1,4 +1,4 @@
-import React from "react";
+import { ComponentType } from "react";
 import { StyleSheet } from "react-native";
 import { ViroARScene, ViroText } from "@reactvision/react-viro";
 import AutoPlaneScene from "./AutoPlaneScene";
@@ -10,7 +10,7 @@ import ShadersScene from "./ShadersScene";
 import { SceneProps } from "./types";
 
 const OpeningScene = (props: SceneProps = {}) => {
-  const navigateToScene = (scene: React.ComponentType) => {
+  const navigateToScene = (scene: ComponentType) => {
     props.sceneNavigator?.push({ scene });
   };
 
