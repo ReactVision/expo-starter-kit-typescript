@@ -1,6 +1,6 @@
 import { ComponentType } from "react";
 import { StyleSheet } from "react-native";
-import { ViroARScene, ViroText } from "@reactvision/react-viro";
+import { ViroARScene, ViroText, isQuest } from "@reactvision/react-viro";
 import AutoPlaneScene from "./AutoPlaneScene";
 import GeospatialAnchorScene from "./GeospatialAnchorScene";
 import ManualPlaneScene from "./ManualPlaneScene";
@@ -51,13 +51,16 @@ const OpeningScene = (props: SceneProps = {}) => {
         style={styles.textStyle}
         onClick={() => navigateToScene(ShadersScene)}
       />
-      <ViroText
-        text="Geospatial Anchors"
-        scale={[0.5, 0.5, 0.5]}
-        position={[0, -1.5, -2]}
-        style={styles.textStyle}
-        onClick={() => navigateToScene(GeospatialAnchorScene)}
-      />
+      {/* Quest has no geospatial tracking. */}
+      {!isQuest && (
+        <ViroText
+          text="Geospatial Anchors"
+          scale={[0.5, 0.5, 0.5]}
+          position={[0, -1.5, -2]}
+          style={styles.textStyle}
+          onClick={() => navigateToScene(GeospatialAnchorScene)}
+        />
+      )}
     </ViroARScene>
   );
 };
