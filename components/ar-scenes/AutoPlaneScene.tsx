@@ -46,9 +46,12 @@ const AutoPlaneScene = (props: SceneProps = {}) => {
         />
       )}
 
+      {/* Upward only: "Horizontal" also matches the ceiling, which Quest's
+          room scan always reports. */}
       <ViroARPlane
         minHeight={0.1}
         minWidth={0.1}
+        alignment="HorizontalUpward"
         onAnchorFound={onPlaneDetected}
       >
         <Viro3DObject

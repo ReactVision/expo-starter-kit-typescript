@@ -25,7 +25,7 @@ This starter kit demonstrates multiple AR scenarios to help you understand how V
 
 The app is built around a multi-scene navigation pattern, with Expo Router on the base:
 
-- **`index.tsx`**: Entry point that initializes the `ViroARSceneNavigator` with the opening scene
+- **`index.tsx`**: Entry point that initializes the `ViroARSceneNavigator` (`ViroXRSceneNavigator` on Meta Quest) with the opening scene
 - **`components/ar-scenes/`**: Contains all AR scene components
   - `OpeningScene.tsx`: Main menu with navigation options
   - `GeospatialAnchorScene.tsx`: Geospatial anchor hosting and resolving demo
@@ -70,13 +70,14 @@ The app uses `ViroARSceneNavigator` to manage scene transitions. Each scene rece
 **Key Viro Components**:
 - `ViroARPlane`: Automatically detects and anchors to horizontal planes
   - `minHeight={0.1}` and `minWidth={0.1}`: Minimum plane dimensions
+  - `alignment="HorizontalUpward"`: Floors and tables only, not ceilings
   - `onAnchorFound`: Callback when a plane is detected
 - `Viro3DObject`: Loads and renders the robot.glb 3D model
   - `type="GLB"`: Specifies GLB/GLTF format
   - `dragType="FixedToPlane"`: Constrains dragging to the plane surface
   - `dragPlane`: Configuration for drag plane properties
     - `planePoint`: Origin of the drag plane
-    - `planeNormal`: Normal vector defining plane orientation (0, 0.5, 0 for horizontal)
+    - `planeNormal`: Normal vector defining plane orientation (`[0, 1, 0]` for horizontal)
     - `maxDistance`: Maximum drag distance in meters
   - `onDrag`: Callback that fires during drag events, logs position changes
 - `ViroAmbientLight`: Provides lighting for 3D models
@@ -93,12 +94,13 @@ The app uses `ViroARSceneNavigator` to manage scene transitions. Each scene rece
 **Features**:
 - User taps to manually select a plane from detected surfaces
 - Displays a dog 3D model (GLB format) on the selected plane
-- Shows "Tap to select a plane" instruction until user selects
+- Shows "Select a plane" instruction until user selects
 - Back button to return to opening scene
 
 **Key Viro Components**:
 - `ViroARPlaneSelector`: Allows user to manually choose from detected planes
   - `minHeight={0.1}` and `minWidth={0.1}`: Minimum plane dimensions
+  - `alignment="HorizontalUpward"`: Offers floors and tables, not walls or ceilings
   - `onPlaneSelected`: Callback when user taps to select a plane
 - `Viro3DObject`: Loads and renders the dog.glb 3D model
   - `type="GLB"`: Specifies GLB/GLTF format
@@ -144,13 +146,13 @@ The app uses `ViroARSceneNavigator` to manage scene transitions. Each scene rece
 - Three bowling pins arranged in a triangle formation
 - Reset button to restart the game
 - Invisible boundary walls to contain objects within the alley
-- Automatic object reset when objects fall too far (prevents memory issues)
 
 **Key Viro Components**:
 - `ViroARScene`: Container with physics world configuration
   - `physicsWorld={{ gravity: [0, -9.8, 0] }}`: Enables physics simulation with Earth-like gravity
 - `ViroARPlaneSelector`: Allows user to select a plane for the bowling alley
   - `minHeight={0.3}` and `minWidth={0.3}`: Minimum plane dimensions
+  - `alignment="HorizontalUpward"`: Offers floors and tables, not walls or ceilings
   - `onPlaneSelected`: Callback when user selects a plane
 - `ViroNode` (keyed): wraps the dynamic pins and ball so bumping its `key` remounts only those objects for a clean reset, while the plane selector stays mounted and keeps its detected planes
 - `ViroBox`: Used for multiple purposes:
@@ -333,7 +335,7 @@ Six of the seven demos run with no setup. The **Geospatial Anchor** demo is the 
 | Key (`app.json`) | Purpose |
 | --- | --- |
 | `rvApiKey`, `rvProjectId` | ReactVision Geospatial backend, from your [ReactVision account](https://reactvision.xyz/viro-react?source=starterkit-readme) |
-| `googleCloudApiKey` and iOS `GARAPIKey` | Google ARCore Geospatial / VPS (a Google Cloud API key with the ARCore API enabled) |
+| `googleCloudApiKey` | Google ARCore Geospatial / VPS (a Google Cloud API key with the ARCore API enabled). The plugin writes it to iOS `GARAPIKey` and Android `com.google.android.ar.API_KEY` for you. |
 
 Leave the placeholders untouched if you're not using the Geospatial demo; the rest of the app is unaffected. See [Geospatial Anchor Scene](#7-geospatial-anchor-scene) for setup links.
 
@@ -376,6 +378,23 @@ npx expo run:android
 ```shell
 npx expo start --dev-client
 ```
+
+### Meta Quest
+
+The same scenes run on Meta Quest 3 and 3S, over passthrough. A Quest build is its own APK: Quest mode makes the manifest require head tracking, which hides the app from phones on the Play Store. Set `XR_TARGET=quest` when you generate the native project:
+
+```shell
+XR_TARGET=quest npx expo prebuild --clean --platform android
+XR_TARGET=quest npx expo run:android
+```
+
+Run `npx expo prebuild --clean` without it to go back to a phone build.
+
+- Run Space Setup on the headset first. Plane detection reads its room scan.
+- The room scan gives every surface at once, so the Auto Plane robot can land on a table or floor that is not in front of you. Look around for it.
+- Point and click with the controllers. To go back a scene, click its Back text; the controller's B button leaves the headset view instead.
+- The Geospatial demo and the Settings button are hidden. Quest has no geospatial tracking, and the one setting, depth occlusion, is phone-only.
+- The No Plane box drags at a fixed distance from the controller, since `FixedToWorld` dragging only follows surfaces on phones.
 
 ## Troubleshooting
 

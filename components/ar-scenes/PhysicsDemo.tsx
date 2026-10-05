@@ -70,38 +70,21 @@ const PhysicsDemo = (props: SceneProps = {}) => {
         onClick={goBack}
       />
 
-      {planeSelected && (
-        <ViroText
-          text="Reset"
-          scale={[0.3, 0.3, 0.3]}
-          position={[0.3, 0.3, -0.7]}
-          style={styles.textStyle}
-          onClick={handleReset}
-        />
-      )}
-
       {!planeSelected && (
         <ViroText
-          text="Tap to select a plane"
+          text="Select a plane"
           scale={[0.4, 0.4, 0.4]}
           position={[0, 0, -2]}
           style={styles.textStyle}
         />
       )}
 
-      {planeSelected && (
-        <ViroText
-          text="Drag the ball and throw it!"
-          scale={[0.3, 0.3, 0.3]}
-          position={[0, 0.3, -0.7]}
-          style={styles.smallTextStyle}
-        />
-      )}
-
+      {/* Upward only, as in ManualPlaneScene: on a wall the pins fall off. */}
       <ViroARPlaneSelector
         ref={selectorRef}
         minHeight={0.3}
         minWidth={0.3}
+        alignment="HorizontalUpward"
         onPlaneSelected={onPlaneSelected}
       >
         {/* Bowling Alley - Long black box */}
@@ -250,6 +233,27 @@ const PhysicsDemo = (props: SceneProps = {}) => {
           />
         </ViroNode>
       </ViroARPlaneSelector>
+
+      {/* Children that mount later go last. On iOS a view inserted before an
+          existing sibling stays hidden until the scene next updates natively. */}
+      {planeSelected && (
+        <ViroText
+          text="Reset"
+          scale={[0.3, 0.3, 0.3]}
+          position={[0.3, 0.3, -0.7]}
+          style={styles.textStyle}
+          onClick={handleReset}
+        />
+      )}
+
+      {planeSelected && (
+        <ViroText
+          text="Drag the ball and throw it!"
+          scale={[0.3, 0.3, 0.3]}
+          position={[0, 0.3, -0.7]}
+          style={styles.smallTextStyle}
+        />
+      )}
     </ViroARScene>
   );
 };

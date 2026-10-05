@@ -40,17 +40,20 @@ const ManualPlaneScene = (props: SceneProps = {}) => {
 
       {!planeSelected && (
         <ViroText
-          text="Tap to select a plane"
+          text="Select a plane"
           scale={[0.4, 0.4, 0.4]}
           position={[0, 0, -2]}
           style={styles.textStyle}
         />
       )}
 
+      {/* Without an alignment the selector offers every wall and the ceiling
+          on Quest, whose room scan reports them all. */}
       <ViroARPlaneSelector
         ref={selectorRef}
         minHeight={0.1}
         minWidth={0.1}
+        alignment="HorizontalUpward"
         onPlaneSelected={onPlaneSelected}
       >
         <Viro3DObject
