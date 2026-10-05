@@ -1,5 +1,9 @@
 import { Platform, StyleSheet, View } from "react-native";
-import { ViroARSceneNavigator } from "@reactvision/react-viro";
+import {
+  ViroARSceneNavigator,
+  ViroXRSceneNavigator,
+  isQuest,
+} from "@reactvision/react-viro";
 import { Host, Button, Icon } from "@expo/ui";
 import {
   buttonBorderShape,
@@ -35,6 +39,18 @@ export default function ARHome() {
       });
     }
   };
+
+  if (isQuest) {
+    // ViroARSceneNavigator needs ARCore, which Quest lacks. This one opens the
+    // headset view instead. HDR is off because on Quest it hides the
+    // passthrough room behind the scene.
+    return (
+      <ViroXRSceneNavigator
+        initialScene={{ scene: OpeningScene }}
+        hdrEnabled={false}
+      />
+    );
+  }
 
   return (
     <View style={styles.container}>
