@@ -392,7 +392,7 @@ Run `npx expo prebuild --clean` without it to go back to a phone build.
 
 - Run Space Setup on the headset first. Plane detection reads its room scan.
 - The room scan gives every surface at once, so the Auto Plane robot can land on a table or floor that is not in front of you. Look around for it.
-- Point and click with the controllers.
+- Point and click with the controllers. To go back a scene, click its Back text; the controller's B button leaves the headset view instead.
 - The Geospatial demo and the Settings button are hidden. Quest has no geospatial tracking, and the one setting, depth occlusion, is phone-only.
 - The No Plane box drags at a fixed distance from the controller, since `FixedToWorld` dragging only follows surfaces on phones.
 
