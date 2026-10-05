@@ -25,7 +25,7 @@ This starter kit demonstrates multiple AR scenarios to help you understand how V
 
 The app is built around a multi-scene navigation pattern, with Expo Router on the base:
 
-- **`index.tsx`**: Entry point that initializes the `ViroARSceneNavigator` with the opening scene
+- **`index.tsx`**: Entry point that initializes the `ViroARSceneNavigator` (`ViroXRSceneNavigator` on Meta Quest) with the opening scene
 - **`components/ar-scenes/`**: Contains all AR scene components
   - `OpeningScene.tsx`: Main menu with navigation options
   - `GeospatialAnchorScene.tsx`: Geospatial anchor hosting and resolving demo
@@ -375,6 +375,22 @@ npx expo run:android
 ```shell
 npx expo start --dev-client
 ```
+
+### Meta Quest
+
+The same scenes run on Meta Quest 3 and 3S, over passthrough. A Quest build is its own APK: Quest mode makes the manifest require head tracking, which hides the app from phones on the Play Store. Set `XR_TARGET=quest` when you generate the native project:
+
+```shell
+XR_TARGET=quest npx expo prebuild --clean --platform android
+XR_TARGET=quest npx expo run:android
+```
+
+Run `npx expo prebuild --clean` without it to go back to a phone build.
+
+- Run Space Setup on the headset first. Plane detection reads its room scan.
+- Point and click with the controllers.
+- The Geospatial demo and the Settings button are hidden. Quest has no geospatial tracking, and the one setting, depth occlusion, is phone-only.
+- The No Plane box drags at a fixed distance from the controller, since `FixedToWorld` dragging only follows surfaces on phones.
 
 ## Troubleshooting
 
