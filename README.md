@@ -94,7 +94,7 @@ The app uses `ViroARSceneNavigator` to manage scene transitions. Each scene rece
 **Features**:
 - User taps to manually select a plane from detected surfaces
 - Displays a dog 3D model (GLB format) on the selected plane
-- Shows "Tap to select a plane" instruction until user selects
+- Shows "Select a plane" instruction until user selects
 - Back button to return to opening scene
 
 **Key Viro Components**:

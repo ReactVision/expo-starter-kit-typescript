@@ -40,7 +40,7 @@ const ManualPlaneScene = (props: SceneProps = {}) => {
 
       {!planeSelected && (
         <ViroText
-          text="Tap to select a plane"
+          text="Select a plane"
           scale={[0.4, 0.4, 0.4]}
           position={[0, 0, -2]}
           style={styles.textStyle}
