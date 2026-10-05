@@ -76,7 +76,7 @@ The app uses `ViroARSceneNavigator` to manage scene transitions. Each scene rece
   - `dragType="FixedToPlane"`: Constrains dragging to the plane surface
   - `dragPlane`: Configuration for drag plane properties
     - `planePoint`: Origin of the drag plane
-    - `planeNormal`: Normal vector defining plane orientation (0, 0.5, 0 for horizontal)
+    - `planeNormal`: Normal vector defining plane orientation (`[0, 1, 0]` for horizontal)
     - `maxDistance`: Maximum drag distance in meters
   - `onDrag`: Callback that fires during drag events, logs position changes
 - `ViroAmbientLight`: Provides lighting for 3D models
@@ -144,7 +144,6 @@ The app uses `ViroARSceneNavigator` to manage scene transitions. Each scene rece
 - Three bowling pins arranged in a triangle formation
 - Reset button to restart the game
 - Invisible boundary walls to contain objects within the alley
-- Automatic object reset when objects fall too far (prevents memory issues)
 
 **Key Viro Components**:
 - `ViroARScene`: Container with physics world configuration
@@ -333,7 +332,7 @@ Six of the seven demos run with no setup. The **Geospatial Anchor** demo is the 
 | Key (`app.json`) | Purpose |
 | --- | --- |
 | `rvApiKey`, `rvProjectId` | ReactVision Geospatial backend, from your [ReactVision account](https://reactvision.xyz/viro-react?source=starterkit-readme) |
-| `googleCloudApiKey` and iOS `GARAPIKey` | Google ARCore Geospatial / VPS (a Google Cloud API key with the ARCore API enabled) |
+| `googleCloudApiKey` | Google ARCore Geospatial / VPS (a Google Cloud API key with the ARCore API enabled). The plugin writes it to iOS `GARAPIKey` and Android `com.google.android.ar.API_KEY` for you. |
 
 Leave the placeholders untouched if you're not using the Geospatial demo; the rest of the app is unaffected. See [Geospatial Anchor Scene](#7-geospatial-anchor-scene) for setup links.
 
