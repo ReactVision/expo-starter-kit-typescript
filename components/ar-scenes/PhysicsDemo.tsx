@@ -79,10 +79,12 @@ const PhysicsDemo = (props: SceneProps = {}) => {
         />
       )}
 
+      {/* Upward only, as in ManualPlaneScene: on a wall the pins fall off. */}
       <ViroARPlaneSelector
         ref={selectorRef}
         minHeight={0.3}
         minWidth={0.3}
+        alignment="HorizontalUpward"
         onPlaneSelected={onPlaneSelected}
       >
         {/* Bowling Alley - Long black box */}

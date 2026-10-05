@@ -70,6 +70,7 @@ The app uses `ViroARSceneNavigator` to manage scene transitions. Each scene rece
 **Key Viro Components**:
 - `ViroARPlane`: Automatically detects and anchors to horizontal planes
   - `minHeight={0.1}` and `minWidth={0.1}`: Minimum plane dimensions
+  - `alignment="HorizontalUpward"`: Floors and tables only, not ceilings
   - `onAnchorFound`: Callback when a plane is detected
 - `Viro3DObject`: Loads and renders the robot.glb 3D model
   - `type="GLB"`: Specifies GLB/GLTF format
@@ -99,6 +100,7 @@ The app uses `ViroARSceneNavigator` to manage scene transitions. Each scene rece
 **Key Viro Components**:
 - `ViroARPlaneSelector`: Allows user to manually choose from detected planes
   - `minHeight={0.1}` and `minWidth={0.1}`: Minimum plane dimensions
+  - `alignment="HorizontalUpward"`: Offers floors and tables, not walls or ceilings
   - `onPlaneSelected`: Callback when user taps to select a plane
 - `Viro3DObject`: Loads and renders the dog.glb 3D model
   - `type="GLB"`: Specifies GLB/GLTF format
@@ -150,6 +152,7 @@ The app uses `ViroARSceneNavigator` to manage scene transitions. Each scene rece
   - `physicsWorld={{ gravity: [0, -9.8, 0] }}`: Enables physics simulation with Earth-like gravity
 - `ViroARPlaneSelector`: Allows user to select a plane for the bowling alley
   - `minHeight={0.3}` and `minWidth={0.3}`: Minimum plane dimensions
+  - `alignment="HorizontalUpward"`: Offers floors and tables, not walls or ceilings
   - `onPlaneSelected`: Callback when user selects a plane
 - `ViroNode` (keyed): wraps the dynamic pins and ball so bumping its `key` remounts only those objects for a clean reset, while the plane selector stays mounted and keeps its detected planes
 - `ViroBox`: Used for multiple purposes:
@@ -388,6 +391,7 @@ XR_TARGET=quest npx expo run:android
 Run `npx expo prebuild --clean` without it to go back to a phone build.
 
 - Run Space Setup on the headset first. Plane detection reads its room scan.
+- The room scan gives every surface at once, so the Auto Plane robot can land on a table or floor that is not in front of you. Look around for it.
 - Point and click with the controllers.
 - The Geospatial demo and the Settings button are hidden. Quest has no geospatial tracking, and the one setting, depth occlusion, is phone-only.
 - The No Plane box drags at a fixed distance from the controller, since `FixedToWorld` dragging only follows surfaces on phones.
