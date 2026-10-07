@@ -12,7 +12,7 @@
   "dependencies": {
     "@expo/material-symbols": "^0.1.1",
     "@expo/ui": "~57.0.21",
-    "@reactvision/react-viro": "^3.0.2",
+    "@reactvision/react-viro": "^3.0.3",
     "expo": "^57.0.26",
     "expo-build-properties": "~57.0.22",
     "expo-constants": "~57.0.20",
