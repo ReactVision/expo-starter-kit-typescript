@@ -11,7 +11,18 @@ module.exports = ({ config }) => {
             plugin[0],
             {
               ...plugin[1],
-              android: { ...plugin[1].android, xRMode: ["AR", "QUEST"] },
+              android: {
+                ...plugin[1].android,
+                xRMode: ["AR", "QUEST"],
+                // Store review checks each declared permission against its use,
+                // and the kit uses none of these. Turn one back on before adding
+                // co-location, Quest Pro eye gaze or ViroObjectDetector.
+                questFeatures: {
+                  colocation: false,
+                  eyeTracking: false,
+                  passthroughCamera: false,
+                },
+              },
             },
           ]
         : plugin,
