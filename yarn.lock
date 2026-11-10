@@ -1754,12 +1754,10 @@
     invariant "^2.2.4"
     nullthrows "^1.1.1"
 
-"@reactvision/react-viro@^3.0.3":
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/@reactvision/react-viro/-/react-viro-3.0.3.tgz#4eeb72527f698ec0fe5af9780b50466d9396cadb"
-  integrity sha512-OzIjwUtYL6lAH/NReahm4yyoWc6vMpipXYsDdYAnoE1C73iOL4rD8a/u9uypp/W8XS8gW1ts05ddeD0z2auREg==
-  dependencies:
-    react "~19.2.3"
+"@reactvision/react-viro@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@reactvision/react-viro/-/react-viro-3.1.1.tgz#b4076b13bcaf588ad120149270e0a11851d34b9a"
+  integrity sha512-db5gn62HNlv4OINP3Ju7Di8HlBkrcxQPGlpyjGlavNJt30hXgxu/tUbI9/VLe8N8q95rweh57JHzmjzBdgRwQA==
 
 "@rtsao/scc@^1.1.0":
   version "1.1.0"
@@ -5509,7 +5507,7 @@ react-style-singleton@^2.2.2, react-style-singleton@^2.2.3:
     get-nonce "^1.0.0"
     tslib "^2.0.0"
 
-react@19.2.3, react@~19.2.3:
+react@19.2.3:
   version "19.2.3"
   resolved "https://registry.yarnpkg.com/react/-/react-19.2.3.tgz#d83e5e8e7a258cf6b4fe28640515f99b87cd19b8"
   integrity sha512-Ku/hhYbVjOQnXDZFv2+RibmLFGwFdeeKHFcOTlrt7xplBnya5OGn/hIRDsqDiSUcfORsDC7MPxwork8jBwsIWA==
