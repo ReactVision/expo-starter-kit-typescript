@@ -31,13 +31,11 @@
         {
           "android": {
             "extraProguardRules": "-keep class * extends androidx.room.RoomDatabase { <init>(); }"
-          },
-          "ios": {
-            "enableSceneSupport": true
           }
         }
       ],
       "expo-router",
+      "expo-status-bar",
       [
         "expo-splash-screen",
         {
