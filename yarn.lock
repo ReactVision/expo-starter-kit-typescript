@@ -1797,10 +1797,10 @@
     invariant "^2.2.4"
     nullthrows "^1.1.1"
 
-"@reactvision/react-viro@^3.2.2":
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/@reactvision/react-viro/-/react-viro-3.2.2.tgz#0b88d9bcb6c50af04af09f13468f4fd8ecd9586b"
-  integrity sha512-IsOxnk5pwJ7Q+odm8k6pNy/KiqLQsWqvGswrLrm3mbdsuvtD1VulajYGCM9qNQrPT0uP/PM0Wc5RzQKq4ZR/hg==
+"@reactvision/react-viro@^3.2.3":
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/@reactvision/react-viro/-/react-viro-3.2.3.tgz#3dc67e1f56f9301afe32ae5352fd9d2ad08cb183"
+  integrity sha512-xZjwSiTKdZsjdH7xmT/SGhZVxG6fOalD0d4sUtV7DFFmld60nz6KXQi6+ytPrbbKVjp61Jl7h9KfwLoateJnGg==
 
 "@rtsao/scc@^1.1.0":
   version "1.1.0"
