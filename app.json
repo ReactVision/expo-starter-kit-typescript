@@ -26,14 +26,7 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      [
-        "expo-build-properties",
-        {
-          "android": {
-            "extraProguardRules": "-keep class * extends androidx.room.RoomDatabase { <init>(); }"
-          }
-        }
-      ],
+      "expo-build-properties",
       "expo-router",
       "expo-status-bar",
       [
